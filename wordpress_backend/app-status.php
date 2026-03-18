@@ -1,3 +1,4 @@
+<?php
 // ************************** ENDPOINT PARA CONTROLAR LA VERSION Y ESTADO DE FILMOLY *******************************
 // Se llama al iniciar la app y es importantísimo.
 // Si queremos desactivar el funcionamiento de la app basta con poner $status = 0;

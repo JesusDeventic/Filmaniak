@@ -30,10 +30,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "actionNo": MessageLookupByLibrary.simpleMessage("No"),
     "actionYes": MessageLookupByLibrary.simpleMessage("Sí"),
+    "andLabel": MessageLookupByLibrary.simpleMessage("y"),
     "appName": MessageLookupByLibrary.simpleMessage("Filmoly"),
     "appVersion10Code": MessageLookupByLibrary.simpleMessage("v1.0.0"),
     "appVersion10Description": MessageLookupByLibrary.simpleMessage(
-      "· Versión inicial de Filmoly.",
+      "·Versión inicial de Filmoly.",
     ),
     "appVersionChangeLogTitle": MessageLookupByLibrary.simpleMessage(
       "Registro de cambios",
@@ -87,6 +88,51 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "email": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
     "error": MessageLookupByLibrary.simpleMessage("Error"),
+    "errorAuthEmailExists": MessageLookupByLibrary.simpleMessage(
+      "Ese email ya está registrado.",
+    ),
+    "errorAuthExpiredCode": MessageLookupByLibrary.simpleMessage(
+      "El código ha expirado.",
+    ),
+    "errorAuthGeneric": MessageLookupByLibrary.simpleMessage(
+      "Ha ocurrido un error. Inténtalo de nuevo.",
+    ),
+    "errorAuthInvalidCode": MessageLookupByLibrary.simpleMessage(
+      "El código no es válido.",
+    ),
+    "errorAuthInvalidCredentials": MessageLookupByLibrary.simpleMessage(
+      "Usuario o contraseña incorrectos.",
+    ),
+    "errorAuthInvalidEmail": MessageLookupByLibrary.simpleMessage(
+      "El email no es válido.",
+    ),
+    "errorAuthInvalidPassword": MessageLookupByLibrary.simpleMessage(
+      "La contraseña debe tener al menos 6 caracteres.",
+    ),
+    "errorAuthInvalidUsername": MessageLookupByLibrary.simpleMessage(
+      "El nombre de usuario debe tener entre 4 y 20 caracteres y solo puede contener letras, números, guiones y guiones bajos.",
+    ),
+    "errorAuthMissingFields": MessageLookupByLibrary.simpleMessage(
+      "Faltan campos obligatorios.",
+    ),
+    "errorAuthMissingLogin": MessageLookupByLibrary.simpleMessage(
+      "Debes indicar usuario o email.",
+    ),
+    "errorAuthRegisterFailed": MessageLookupByLibrary.simpleMessage(
+      "No se pudo completar el registro. Inténtalo de nuevo.",
+    ),
+    "errorAuthSessionFailed": MessageLookupByLibrary.simpleMessage(
+      "No se pudo crear la sesión. Inténtalo más tarde.",
+    ),
+    "errorAuthTooManyAttempts": MessageLookupByLibrary.simpleMessage(
+      "Has superado el número máximo de intentos.",
+    ),
+    "errorAuthTooManyRequests": MessageLookupByLibrary.simpleMessage(
+      "Demasiados intentos. Inténtalo más tarde.",
+    ),
+    "errorAuthUsernameExists": MessageLookupByLibrary.simpleMessage(
+      "Ese nombre de usuario ya existe.",
+    ),
     "expandMenu": MessageLookupByLibrary.simpleMessage("Expandir"),
     "faq1Answer": MessageLookupByLibrary.simpleMessage(
       "Es una aplicación con una base de datos de películas, series y otro tipo de contenido audiovisual, que dispone de herramientas que permiten a los usuarios interactuar con otros miembros, crear listas, añadir valoraciones y reseñas entre otras funcionalidades.",
@@ -155,7 +201,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Contraseña restablecida correctamente.",
     ),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
-      "Mínimo 8 caracteres",
+      "Mínimo 6 caracteres",
     ),
     "passwordMismatch": MessageLookupByLibrary.simpleMessage(
       "Las contraseñas no coinciden",
@@ -168,6 +214,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "registerError": MessageLookupByLibrary.simpleMessage(
       "Error en el registro",
+    ),
+    "registerMarketingConsentAccept": MessageLookupByLibrary.simpleMessage(
+      "Acepto recibir promociones y comunicaciones comerciales",
+    ),
+    "registerTermsAndConditionsAccept": MessageLookupByLibrary.simpleMessage(
+      "He leído y acepto los",
+    ),
+    "registerTermsAndConditionsError": MessageLookupByLibrary.simpleMessage(
+      "Debes aceptar los términos y condiciones y la política de privacidad",
     ),
     "sendCode": MessageLookupByLibrary.simpleMessage("Enviar código"),
     "settingsLabel": MessageLookupByLibrary.simpleMessage("Ajustes"),
@@ -201,7 +256,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "username": MessageLookupByLibrary.simpleMessage("Nombre de usuario"),
     "usernameMinLength": MessageLookupByLibrary.simpleMessage(
-      "Mínimo 3 caracteres",
+      "Mínimo 4 caracteres",
     ),
     "verificationCode": MessageLookupByLibrary.simpleMessage(
       "Código de verificación (6 dígitos)",
@@ -212,7 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "weekStartMonday": MessageLookupByLibrary.simpleMessage("Lunes"),
     "weekStartSunday": MessageLookupByLibrary.simpleMessage("Domingo"),
-    "welcome": MessageLookupByLibrary.simpleMessage("Bienvenido"),
+    "welcome": MessageLookupByLibrary.simpleMessage("Bienvenid@!"),
     "wrongCredentials": MessageLookupByLibrary.simpleMessage(
       "Credenciales incorrectas",
     ),

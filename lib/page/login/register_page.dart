@@ -1,4 +1,5 @@
 import 'package:filmoly/api/filmoly_api.dart';
+import 'package:filmoly/core/api_error_messages.dart';
 import 'package:filmoly/core/global_functions.dart';
 import 'package:filmoly/core/global_variables.dart';
 import 'package:filmoly/controller/recaptcha_controller.dart';
@@ -9,8 +10,10 @@ import 'package:filmoly/widget/components_widgets.dart';
 import 'package:filmoly/providers/language_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -26,8 +29,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _displayNameController = TextEditingController();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _confirmPasswordFocusNode = FocusNode();
   bool _obscureText = true;
   bool _isLoading = false;
+  bool _acceptTerms = false;
+  bool _acceptMarketing = false;
 
   @override
   void initState() {
@@ -37,6 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _confirmPasswordFocusNode.dispose();
     _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -48,6 +59,10 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _submitRegister() async {
     if (!_formKey.currentState!.validate()) return;
     unFocusGlobal();
+    if (!_acceptTerms) {
+      showCustomSnackBar(S.current.registerTermsAndConditionsError, type: -1);
+      return;
+    }
     final isNotBot = await RecaptchaService.isNotABot();
     if (!isNotBot) {
       showCustomSnackBar(S.current.error, type: -1);
@@ -62,6 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
         displayName: _displayNameController.text.trim().isEmpty
             ? null
             : _displayNameController.text.trim(),
+        marketingConsent: _acceptMarketing,
       );
       if (!mounted) return;
       if (result['success'] == true && result['token'] != null) {
@@ -76,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
           return;
         }
       }
-      final message = result['message'] as String? ?? S.current.registerError;
+      final message = getAuthErrorMessage(result['code'] as String?);
       showCustomSnackBar(message, type: -1);
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -112,32 +128,36 @@ class _RegisterPageState extends State<RegisterPage> {
                             const SizedBox(height: 24),
                             TextFormField(
                           controller: _usernameController,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) => _emailFocusNode.requestFocus(),
                           decoration: InputDecoration(
                             labelText: S.current.username,
                             prefixIcon: const Icon(Icons.person_outline),
                             border: const OutlineInputBorder(),
                           ),
-                          textInputAction: TextInputAction.next,
+                          maxLength: 20,
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(60),
-                            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_\-.]')),
+                            LengthLimitingTextInputFormatter(20),
+                            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_-]')),
                           ],
                           validator: (v) {
                             if (v == null || v.isEmpty) return S.current.fieldRequired;
-                            if (v.length < 3) return S.current.usernameMinLength;
+                            if (v.length < 4) return S.current.usernameMinLength;
                             return null;
                           },
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
                         TextFormField(
+                          focusNode: _emailFocusNode,
                           controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
                           decoration: InputDecoration(
                             labelText: S.current.email,
                             prefixIcon: const Icon(Icons.email_outlined),
                             border: const OutlineInputBorder(),
                           ),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
                           validator: (v) {
                             if (v == null || v.isEmpty) return S.current.fieldRequired;
                             if (!v.contains('@') || !v.contains('.')) return S.current.invalidEmail;
@@ -157,43 +177,127 @@ class _RegisterPageState extends State<RegisterPage> {
                         // ),
                         // const SizedBox(height: 16),
                         TextFormField(
+                          focusNode: _passwordFocusNode,
                           controller: _passwordController,
                           obscureText: _obscureText,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
                           decoration: InputDecoration(
                             labelText: S.current.password,
                             prefixIcon: const Icon(Icons.lock_outline),
                             border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
-                              icon: Icon(
-                                  _obscureText ? Icons.visibility_off : Icons.visibility),
+                              icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
                               onPressed: () => setState(() => _obscureText = !_obscureText),
                             ),
                           ),
-                          textInputAction: TextInputAction.next,
                           validator: (v) {
                             if (v == null || v.isEmpty) return S.current.fieldRequired;
-                            if (v.length < 8) return S.current.passwordMinLength;
+                            if (v.length < 6) return S.current.passwordMinLength;
                             return null;
                           },
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
+                          focusNode: _confirmPasswordFocusNode,
                           controller: _confirmPasswordController,
                           obscureText: _obscureText,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => _submitRegister(),
                           decoration: InputDecoration(
                             labelText: S.current.confirmPassword,
                             prefixIcon: const Icon(Icons.lock_outline),
                             border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                              onPressed: () => setState(() => _obscureText = !_obscureText),
+                            ),
                           ),
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (_) => _submitRegister(),
                           validator: (v) {
                             if (v == null || v.isEmpty) return S.current.fieldRequired;
                             if (v != _passwordController.text) return S.current.passwordMismatch;
                             return null;
                           },
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Transform.scale(
+                              scale: 1.5,
+                              child: Checkbox(
+                                value: _acceptTerms,
+                                onChanged: (value) {
+                                  setState(() => _acceptTerms = value ?? false);
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  unFocusGlobal();
+                                  setState(() => _acceptTerms = !_acceptTerms);
+                                },
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(text: S.current.registerTermsAndConditionsAccept),
+                                      TextSpan(
+                                        text: ' ${S.current.termsAndConditionsLabel}',
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.secondary,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            launchUrl(
+                                              Uri.parse('https://deventic.com/terms-and-conditions/'),
+                                              mode: LaunchMode.externalApplication,
+                                            );
+                                          },
+                                      ),
+                                      TextSpan(text: ' ${S.current.andLabel} '),
+                                      TextSpan(
+                                        text: S.current.privacyPoliciesLabel,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.secondary,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            launchUrl(
+                                              Uri.parse('https://deventic.com/privacy-policy/'),
+                                              mode: LaunchMode.externalApplication,
+                                            );
+                                          },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Transform.scale(
+                              scale: 1.5,
+                              child: Checkbox(
+                                value: _acceptMarketing,
+                                onChanged: (value) {
+                                  setState(() => _acceptMarketing = value ?? false);
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  unFocusGlobal();
+                                  setState(() => _acceptMarketing = !_acceptMarketing);
+                                },
+                                child: Text(S.current.registerMarketingConsentAccept),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -212,7 +316,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: double.infinity,
                           child: OutlinedButton(
                             onPressed: () => context.go(AppRoutes.login),
-                            child: Text(S.current.signIn),
+                            child: Text(S.current.back),
                           ),
                         ),
                           ],

@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "actionNo": MessageLookupByLibrary.simpleMessage("No"),
     "actionYes": MessageLookupByLibrary.simpleMessage("Sí"),
+    "andLabel": MessageLookupByLibrary.simpleMessage("i"),
     "appName": MessageLookupByLibrary.simpleMessage("Filmoly"),
     "appVersion10Code": MessageLookupByLibrary.simpleMessage("v1.0.0"),
     "appVersion10Description": MessageLookupByLibrary.simpleMessage(
@@ -87,6 +88,51 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "email": MessageLookupByLibrary.simpleMessage("Correu electrònic"),
     "error": MessageLookupByLibrary.simpleMessage("Error"),
+    "errorAuthEmailExists": MessageLookupByLibrary.simpleMessage(
+      "Aquest correu electrònic ja està registrat.",
+    ),
+    "errorAuthExpiredCode": MessageLookupByLibrary.simpleMessage(
+      "El codi ha caducat.",
+    ),
+    "errorAuthGeneric": MessageLookupByLibrary.simpleMessage(
+      "S\'ha produït un error. Torna-ho a provar.",
+    ),
+    "errorAuthInvalidCode": MessageLookupByLibrary.simpleMessage(
+      "El codi no és vàlid.",
+    ),
+    "errorAuthInvalidCredentials": MessageLookupByLibrary.simpleMessage(
+      "Usuari o contrasenya incorrectes.",
+    ),
+    "errorAuthInvalidEmail": MessageLookupByLibrary.simpleMessage(
+      "El correu electrònic no és vàlid.",
+    ),
+    "errorAuthInvalidPassword": MessageLookupByLibrary.simpleMessage(
+      "La contrasenya ha de tenir almenys 6 caràcters.",
+    ),
+    "errorAuthInvalidUsername": MessageLookupByLibrary.simpleMessage(
+      "El nom d\'usuari ha de tenir entre 4 i 20 caràcters i només pot contenir lletres, números, guions i guions baixos.",
+    ),
+    "errorAuthMissingFields": MessageLookupByLibrary.simpleMessage(
+      "Falten camps obligatoris.",
+    ),
+    "errorAuthMissingLogin": MessageLookupByLibrary.simpleMessage(
+      "Has d\'indicar l\'usuari o el correu electrònic.",
+    ),
+    "errorAuthRegisterFailed": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut completar el registre. Torna-ho a provar.",
+    ),
+    "errorAuthSessionFailed": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut crear la sessió. Torna-ho a provar més tard.",
+    ),
+    "errorAuthTooManyAttempts": MessageLookupByLibrary.simpleMessage(
+      "Has superat el nombre màxim d\'intents.",
+    ),
+    "errorAuthTooManyRequests": MessageLookupByLibrary.simpleMessage(
+      "Massa intents. Torna-ho a provar més tard.",
+    ),
+    "errorAuthUsernameExists": MessageLookupByLibrary.simpleMessage(
+      "Aquest nom d\'usuari ja existeix.",
+    ),
     "expandMenu": MessageLookupByLibrary.simpleMessage("Expandir"),
     "faq1Answer": MessageLookupByLibrary.simpleMessage(
       "És una aplicació amb una base de dades de cinema i sèries, amb una sèrie d\'eines que permeten als usuaris interactuar amb altres membres, crear llistes, afegir valoracions i ressenyes entre altres funcionalitats.",
@@ -151,7 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Contrasenya restablerta correctament.",
     ),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
-      "Mínim 8 caràcters",
+      "Mínim 6 caràcters",
     ),
     "passwordMismatch": MessageLookupByLibrary.simpleMessage(
       "Les contrasenyes no coincideixen",
@@ -164,6 +210,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "registerError": MessageLookupByLibrary.simpleMessage(
       "Error en el registre",
+    ),
+    "registerMarketingConsentAccept": MessageLookupByLibrary.simpleMessage(
+      "Accepto rebre promocions i comunicacions comercials",
+    ),
+    "registerTermsAndConditionsAccept": MessageLookupByLibrary.simpleMessage(
+      "He llegit i accepto els",
+    ),
+    "registerTermsAndConditionsError": MessageLookupByLibrary.simpleMessage(
+      "Has d\'acceptar els termes i condicions i la política de privacitat",
     ),
     "sendCode": MessageLookupByLibrary.simpleMessage("Enviar codi"),
     "settingsLabel": MessageLookupByLibrary.simpleMessage("Configuració"),
@@ -199,7 +254,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "username": MessageLookupByLibrary.simpleMessage("Nom d\'usuari"),
     "usernameMinLength": MessageLookupByLibrary.simpleMessage(
-      "Mínim 3 caràcters",
+      "Mínim 4 caràcters",
     ),
     "verificationCode": MessageLookupByLibrary.simpleMessage(
       "Codi de verificació (6 dígits)",

@@ -261,27 +261,11 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                     mouseCursor: SystemMouseCursors.click,
                     child: Row(
                       children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.secondary,
-                              width: 1,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                            child: Text(
-                              globalCurrentUser.username.isNotEmpty
-                                  ? globalCurrentUser.username.substring(0, 1).toUpperCase()
-                                  : '?',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSecondaryContainer,
-                              ),
-                            ),
-                          ),
+                        userAvatar(
+                          context,
+                          avatarUrl: globalCurrentUser.avatarUrl,
+                          username: globalCurrentUser.username,
+                          size: 40,
                         ),
                         const SizedBox(width: 8),
                         Flexible(
@@ -393,10 +377,9 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                 ListTile(
                   leading: const Icon(Icons.exit_to_app_rounded),
                   title: Text(S.current.userSectionSessionClose),
-                  onTap: () async {
-                    Navigator.pop(dialogContext);
+                  onTap: () {
                     final router = GoRouter.of(context);
-                    final confirm = await showDialog<bool>(
+                    showDialog(
                       context: context,
                       builder: (c) => AlertDialog(
                         title: Text(S.current.userSectionSessionClose),
@@ -406,14 +389,39 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                             children: [
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () => Navigator.pop(c, false),
+                                  onPressed: () => Navigator.pop(c),
                                   child: Text(S.current.actionNo),
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: OutlinedButton(
-                                  onPressed: () => Navigator.pop(c, true),
+                                  onPressed: () async {
+                                    Navigator.pop(c);
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      barrierColor: Colors.black26,
+                                      builder: (ctx) => PopScope(
+                                        canPop: false,
+                                        child: Dialog(
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          child: SizedBox.expand(
+                                            child: Center(
+                                              child: const CircularProgressIndicator(strokeWidth: 2),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                    await logoutUser();
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                    }
+                                    router.go(AppRoutes.login);
+                                  },
                                   child: Text(S.current.actionYes),
                                 ),
                               ),
@@ -422,10 +430,6 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                         ],
                       ),
                     );
-                    if (confirm == true) {
-                      await logoutUser();
-                      if (context.mounted) router.go(AppRoutes.login);
-                    }
                   },
                 ),
                 ListTile(
@@ -496,27 +500,11 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                      width: 1,
-                    ),
-                  ),
-                  child: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                    child: Text(
-                      globalCurrentUser.username.isNotEmpty
-                          ? globalCurrentUser.username.substring(0, 1).toUpperCase()
-                          : '?',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSecondaryContainer,
-                      ),
-                    ),
-                  ),
+                userAvatar(
+                  context,
+                  avatarUrl: globalCurrentUser.avatarUrl,
+                  username: globalCurrentUser.username,
+                  size: 40,
                 ),
                 if (isDesktop) ...[
                   const SizedBox(width: 12),

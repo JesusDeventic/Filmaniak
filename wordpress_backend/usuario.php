@@ -1,3 +1,4 @@
+<?php
 /**
  * Filmoly Update User Endpoint
  */
@@ -30,6 +31,8 @@ add_action('rest_api_init', function () {
  * =========================================================
  */
 function filmoly_get_full_user_data($user_id) {
+    global $wpdb;
+
     $user = get_userdata($user_id);
 
     if (!$user) {
@@ -38,6 +41,13 @@ function filmoly_get_full_user_data($user_id) {
 
     $retroteca_vip = get_user_meta($user->ID, 'filmoly_retroteca_vip', false);
     $retroteca_vip = ($retroteca_vip === '') ? 1 : $retroteca_vip;
+
+    // Último login desde wp_filmoly_sessions (MAX created_at)
+    $sessions_table = $wpdb->prefix . 'filmoly_sessions';
+    $last_login = $wpdb->get_var($wpdb->prepare(
+        "SELECT MAX(created_at) FROM {$sessions_table} WHERE user_id = %d",
+        $user->ID
+    ));
 
     return [
         'id' => (int) $user->ID,
@@ -57,10 +67,9 @@ function filmoly_get_full_user_data($user_id) {
         'filmoly_retroteca_vip' => (bool) $retroteca_vip,
         'marketing_consent' => (bool) get_user_meta($user->ID, 'filmoly_marketing_consent', true),
         'account_status' => get_user_meta($user->ID, 'filmoly_account_status', true) ?: 'active',
-		'filmoly_last_login' => get_user_meta($user->ID, 'filmoly_last_login', true) ?: '',
-		'filmoly_review_status' => get_user_meta($user->ID, 'filmoly_review_status', true) ?: 'none',
-		'filmoly_review_prompted_at' => get_user_meta($user->ID, 'filmoly_review_prompted_at', true) ?: '',
-		'account_status' => get_user_meta($user->ID, 'filmoly_account_status', true) ?: 'active',
+        'filmoly_last_login' => $last_login ?: '',
+        'filmoly_review_status' => get_user_meta($user->ID, 'filmoly_review_status', true) ?: 'none',
+        'filmoly_review_prompted_at' => get_user_meta($user->ID, 'filmoly_review_prompted_at', true) ?: '',
     ];
 }
 

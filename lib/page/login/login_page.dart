@@ -1,4 +1,5 @@
 import 'package:filmoly/api/filmoly_api.dart';
+import 'package:filmoly/core/api_error_messages.dart';
 import 'package:filmoly/core/global_functions.dart';
 import 'package:filmoly/core/global_variables.dart';
 import 'package:filmoly/controller/recaptcha_controller.dart';
@@ -93,13 +94,14 @@ class _LoginPageState extends State<LoginPage> {
             // Token ya guardado en saveToken
           }
           RecaptchaService.hideBadge();
-          showCustomSnackBar(S.current.welcome, type: 1);
-          // Sincronizar push: registrar token en backend + topic idioma
-          await syncPushConfig();
           context.go(AppRoutes.home);
+          showCustomSnackBar(S.current.welcome, type: 1);
+          syncPushConfig(); // En segundo plano: registrar token en backend + topic idioma
           return;
         }
       }
+      final message = getAuthErrorMessage(result['code'] as String?);
+      showCustomSnackBar(message, type: -1);
       _startCountDown();
     } finally {
       if (mounted) {
@@ -199,10 +201,15 @@ class _LoginPageState extends State<LoginPage> {
                                     ? null
                                     : _submitLogin,
                                 child: _isLoading
-                                    ? const SizedBox(
-                                        height: 24,
-                                        width: 24,
-                                        child: CircularProgressIndicator(strokeWidth: 2),
+                                    ? SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor: AlwaysStoppedAnimation<Color>(
+                                            Theme.of(context).colorScheme.onPrimary,
+                                          ),
+                                        ),
                                       )
                                     : Text(S.current.signIn),
                               ),

@@ -100,8 +100,18 @@ ThemeData themeFromColorScheme(ColorScheme colorScheme) {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         mouseCursor: WidgetStateProperty.all<MouseCursor>(SystemMouseCursors.click),
-        backgroundColor: WidgetStateProperty.all<Color>(colorScheme.primary),
-        foregroundColor: WidgetStateProperty.all<Color>(colorScheme.onPrimary),
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return colorScheme.primary.withValues(alpha: 0.4);
+          }
+          return colorScheme.primary;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return colorScheme.onPrimary.withValues(alpha: 0.6);
+          }
+          return colorScheme.onPrimary;
+        }),
         padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
@@ -134,7 +144,13 @@ ThemeData themeFromColorScheme(ColorScheme colorScheme) {
     snackBarTheme: SnackBarThemeData(
       backgroundColor: colorScheme.inverseSurface,
       contentTextStyle: TextStyle(color: colorScheme.onInverseSurface),
-      behavior: SnackBarBehavior.floating,
+      //behavior: SnackBarBehavior.fixed,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
     ),
   );
 }

@@ -74,3 +74,67 @@ class _FilmolyAppState extends State<FilmolyApp> {
     );
   }
 }
+
+// ============================================================================
+// NOTA PARA DUPLICAR ESTE PROYECTO COMO BASE DE OTRA APP
+// ============================================================================
+// Si copias este proyecto para crear otra app distinta, revisa y cambia:
+//
+// 1) Identidad visual
+//    - Logo principal y assets:
+//      - Sustituir `assets/logo.png` por el logo de la nueva app.
+//      - Regenerar iconos con `flutter_launcher_icons` (ver sección `flutter_launcher_icons`
+//        en `pubspec.yaml` y ejecutar: `dart run flutter_launcher_icons`).
+//    - Icono de notificaciones push Android:
+//      - Reemplazar `android/app/src/main/res/drawable/ic_notification.png`
+//        por un PNG monocromo (normalmente blanco) del nuevo logo, 24–32 px.
+//
+// 2) Paquete / identificadores
+//    - Cambiar el identificador de paquete:
+//      - Android: `applicationId` en `android/app/build.gradle(.kts)` y `package_name`
+//        en `android/app/google-services.json`.
+//      - iOS: `PRODUCT_BUNDLE_IDENTIFIER` en Xcode (Runner) y `bundle_id` en
+//        `ios/Runner/GoogleService-Info.plist`.
+//
+// 3) Firebase (nuevo proyecto)
+//    - Crear proyecto Firebase nuevo y descargar:
+//      - `android/app/google-services.json`
+//      - `ios/Runner/GoogleService-Info.plist`
+//    - Para Web:
+//      - Actualizar `lib/api/firebase_web_config.dart` con la nueva config web
+//        (`apiKey`, `appId`, `projectId`, `messagingSenderId`, etc.).
+//      - Actualizar la `webVapidKey` con la Web Push key del nuevo proyecto.
+//
+// 4) WordPress / API backend
+//    - Cambiar la URL base en `lib/api/filmoly_api.dart`:
+//      - Constante `filmolyBaseUrl` debe apuntar al nuevo dominio / namespace REST.
+//    - Revisar endpoints específicos copiados de Filmoly:
+//      - `wordpress_backend/*.php` (login.php, usuario.php, notificaciones.php,
+//        app-status.php, recaptcha.php, etc.) y adaptar:
+//        - Prefijos (`filmoly_...`) si quieres nuevos nombres.
+//        - Rutas REST (`filmoly/v1/...`) si cambias el namespace.
+//
+// 5) Push notifications (servidor)
+//    - Si usas FCM HTTP v1:
+//      - Generar una nueva Service Account en el proyecto Firebase nuevo.
+//      - Subir el JSON a tu servidor (ruta segura) y ajustar en `wp-config.php`:
+//        - `FILMOLY_FIREBASE_PROJECT_ID` (nuevo ID de proyecto).
+//        - `FILMOLY_FIREBASE_SERVICE_ACCOUNT_PATH` (ruta al JSON).
+//    - Revisar `wordpress_backend/notificaciones.php` y `WebPage_NotificacionesPush.php`
+//      por si quieres cambiar textos o comportamiento.
+//
+// 6) Branding / textos específicos
+//    - Revisar ARB de localización en `lib/l10n/*.arb`:
+//      - Nombre de la app (`appName`) y cualquier referencia a "Filmoly".
+//      - FAQs, textos de contacto, políticas, etc.
+//    - Regenerar l10n con `dart run intl_utils:generate` (o desde el IDE).
+//
+// 7) Otros puntos a revisar
+//    - Tema de colores en `lib/styles/colors.dart`:
+//      - Cambiar `AppColors.primary`, `secondary`, etc. si la nueva app usa otros colores.
+//    - URLs externas (web, soporte, redes sociales) en:
+//      - `lib/page/users/contact_page.dart`
+//      - Cualquier otro lugar donde aparezcan dominios o paths de Filmoly.
+//
+// Con estos cambios, este proyecto sirve como plantilla reutilizable para nuevas apps
+// que compartan la misma estructura técnica pero con otra marca / backend / Firebase.

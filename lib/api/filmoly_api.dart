@@ -4,12 +4,33 @@ import 'package:filmoly/core/global_variables.dart';
 import 'package:filmoly/core/secure_storage.dart';
 import 'package:filmoly/model/user_model.dart';
 import 'package:filmoly/model/app_status_model.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:http/http.dart' as http;
 
 /// Base URL del WordPress (La Retroteca).
 const String filmolyBaseUrl = 'https://retroteca.org/wp-json/filmoly/v1';
 
 final FilmolySecureStorage _secureStorage = FilmolySecureStorage();
+
+/// User-Agent con app + dispositivo para que el backend lo guarde en user_agent.
+String _getFilmolyUserAgent() {
+  final v = globalCurrentVersionApp.isNotEmpty ? globalCurrentVersionApp : '1.0.0';
+  if (kIsWeb) return 'Filmoly/$v (Web)';
+  switch (defaultTargetPlatform) {
+    case TargetPlatform.android:
+      return 'Filmoly/$v (Android)';
+    case TargetPlatform.iOS:
+      return 'Filmoly/$v (iOS)';
+    case TargetPlatform.windows:
+      return 'Filmoly/$v (Windows)';
+    case TargetPlatform.macOS:
+      return 'Filmoly/$v (macOS)';
+    case TargetPlatform.linux:
+      return 'Filmoly/$v (Linux)';
+    default:
+      return 'Filmoly/$v';
+  }
+}
 
 class FilmolyApi {
   static const String _baseUrl = filmolyBaseUrl;
@@ -18,6 +39,7 @@ class FilmolyApi {
     final map = <String, String>{
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'User-Agent': _getFilmolyUserAgent(),
     };
     if (token != null && token.isNotEmpty) {
       map['Authorization'] = 'Bearer $token';
@@ -32,12 +54,14 @@ class FilmolyApi {
     required String email,
     required String password,
     String? displayName,
+    bool marketingConsent = false,
   }) async {
     final url = Uri.parse('$_baseUrl/auth/register');
     final body = <String, dynamic>{
       'username': username,
       'email': email,
       'password': password,
+      'marketing_consent': marketingConsent,
     };
     if (displayName != null && displayName.isNotEmpty) {
       body['display_name'] = displayName;
@@ -73,7 +97,8 @@ class FilmolyApi {
       return data;
     }
     final message = data['message'] as String? ?? 'Credenciales incorrectas';
-    return {'success': false, 'message': message, 'data': data};
+    final code = data['code'] as String?;
+    return {'success': false, 'message': message, 'code': code, 'data': data};
   }
 
   /// GET /auth/me — valida token y devuelve usuario o null.
@@ -112,7 +137,8 @@ class FilmolyApi {
     final data = jsonDecode(response.body) as Map<String, dynamic>? ?? {};
     final success = response.statusCode == 200 && (data['success'] == true);
     final message = data['message'] as String? ?? (success ? 'OK' : 'Error');
-    return {'success': success, 'message': message};
+    final code = data['code'] as String?;
+    return {'success': success, 'message': message, 'code': code};
   }
 
   /// POST /auth/reset-password
@@ -134,7 +160,8 @@ class FilmolyApi {
     final data = jsonDecode(response.body) as Map<String, dynamic>? ?? {};
     final success = response.statusCode == 200 && (data['success'] == true);
     final message = data['message'] as String? ?? (success ? 'OK' : 'Error');
-    return {'success': success, 'message': message};
+    final errorCode = data['code'] as String?;
+    return {'success': success, 'message': message, 'code': errorCode};
   }
 
   /// Guarda el token en secure storage (tras login o registro).

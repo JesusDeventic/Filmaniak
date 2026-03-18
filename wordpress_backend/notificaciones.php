@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+//require_once __DIR__ . '/filmoly_translations.php'; // No hace falta porque estan en otro snippet
+
 /**
  * =========================================================
  * CREAR TABLA DE NOTIFICACIONES
@@ -649,4 +651,16 @@ function filmoly_notify_user($user_id, $title, $message) {
         'notification_id' => $notification_id,
         'push' => $push_result,
     ];
+}
+
+/**
+ * Envía notificación + push en el idioma del usuario (filmoly_language).
+ * Usa claves de filmoly_translations.php. Ejemplo:
+ *   filmoly_notify_user_translated($user_id, 'notif_new_msg_title', 'notif_new_msg_body', ['name' => 'Juan']);
+ */
+function filmoly_notify_user_translated($user_id, $title_key, $message_key, $replacements = []) {
+    $locale = function_exists('filmoly_get_user_language') ? filmoly_get_user_language($user_id) : 'en';
+    $title = filmoly_t($title_key, $locale, $replacements);
+    $message = filmoly_t($message_key, $locale, $replacements);
+    return filmoly_notify_user($user_id, $title, $message);
 }

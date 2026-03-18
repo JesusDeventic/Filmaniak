@@ -1,3 +1,4 @@
+<?php
 /**
  * Filmoly Auth API
  * Registro, login, logout, me, forgot password y reset password
@@ -7,6 +8,8 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+require_once __DIR__ . '/filmoly_translations.php';
 
 /**
  * =========================================================
@@ -244,6 +247,19 @@ function filmoly_auth_get_user_data($user_id) {
     ];
 }
 
+/**
+ * Devuelve los datos del usuario para login/me/register.
+ * Si está cargado usuario.php y existe filmoly_get_full_user_data(), devuelve el usuario completo
+ * (language, start_day_week, date_format, country, birthdate, etc.); si no, solo los básicos.
+ */
+function filmoly_auth_get_user_data_for_response($user_id) {
+    if (function_exists('filmoly_get_full_user_data')) {
+        $full = filmoly_get_full_user_data($user_id);
+        return $full !== null ? $full : filmoly_auth_get_user_data($user_id);
+    }
+    return filmoly_auth_get_user_data($user_id);
+}
+
 function filmoly_auth_revoke_current_token(WP_REST_Request $request) {
     global $wpdb;
 
@@ -325,16 +341,11 @@ function filmoly_auth_create_reset_code($user_id) {
 
 function filmoly_auth_send_reset_email($user, $code) {
     $to = $user->user_email;
-    $subject = 'Filmoly - Código para restablecer tu contraseña';
+    $locale = function_exists('filmoly_get_user_language') ? filmoly_get_user_language($user->ID) : 'en';
+    $name = $user->display_name ? $user->display_name : $user->user_login;
 
-    $display_name = $user->display_name ? $user->display_name : $user->user_login;
-
-    $message = "Hola {$display_name},\n\n";
-    $message .= "Hemos recibido una solicitud para restablecer tu contraseña en Filmoly.\n\n";
-    $message .= "Tu código de verificación es: {$code}\n\n";
-    $message .= "Este código caduca en 15 minutos.\n";
-    $message .= "Si no has solicitado este cambio, puedes ignorar este correo.\n\n";
-    $message .= "Equipo de Filmoly";
+    $subject = filmoly_t('reset_email_subject', $locale);
+    $message = filmoly_t('reset_email_body', $locale, ['name' => $name, 'code' => $code]);
 
     $headers = ['Content-Type: text/plain; charset=UTF-8'];
 
@@ -431,17 +442,25 @@ function filmoly_auth_register(WP_REST_Request $request) {
     $email = isset($params['email']) ? sanitize_email($params['email']) : '';
     $password = isset($params['password']) ? (string) $params['password'] : '';
     $display_name = isset($params['display_name']) ? sanitize_text_field($params['display_name']) : '';
+    $marketing_consent = isset($params['marketing_consent']) ? filter_var($params['marketing_consent'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) : false;
 
-    if ($username === '' || strlen($username) < 3) {
-        return filmoly_auth_error('invalid_username', 'El username es inválido.', 400);
+    // Username: 4-20 caracteres, solo [a-zA-Z0-9_-]
+    if ($username === '' || strlen($username) < 4) {
+        return filmoly_auth_error('invalid_username', 'El nombre de usuario debe tener al menos 4 caracteres.', 400);
+    }
+    if (strlen($username) > 20) {
+        return filmoly_auth_error('invalid_username', 'El nombre de usuario no puede superar 20 caracteres.', 400);
+    }
+    if (!preg_match('/^[a-zA-Z0-9_-]+$/', $username)) {
+        return filmoly_auth_error('invalid_username', 'El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.', 400);
     }
 
     if (!is_email($email)) {
         return filmoly_auth_error('invalid_email', 'El email es inválido.', 400);
     }
 
-    if (strlen($password) < 8) {
-        return filmoly_auth_error('invalid_password', 'La contraseña debe tener al menos 8 caracteres.', 400);
+    if (strlen($password) < 6) {
+        return filmoly_auth_error('invalid_password', 'La contraseña debe tener al menos 6 caracteres.', 400);
     }
 
     if (username_exists($username)) {
@@ -464,6 +483,9 @@ function filmoly_auth_register(WP_REST_Request $request) {
         return filmoly_auth_error('register_failed', $user_id->get_error_message(), 400);
     }
 
+    // Guardar consentimiento de marketing en usermeta
+    update_user_meta($user_id, 'filmoly_marketing_consent', $marketing_consent ? 1 : 0);
+
     $session = filmoly_auth_create_session($user_id);
 
     if (!$session) {
@@ -475,7 +497,7 @@ function filmoly_auth_register(WP_REST_Request $request) {
         'message' => 'Registro completado correctamente.',
         'token' => $session['token'],
         'expires_at' => $session['expires_at'],
-        'user' => filmoly_auth_get_user_data($user_id),
+        'user' => filmoly_auth_get_user_data_for_response($user_id),
     ], 201);
 }
 
@@ -511,7 +533,7 @@ function filmoly_auth_login(WP_REST_Request $request) {
         'message' => 'Login correcto.',
         'token' => $session['token'],
         'expires_at' => $session['expires_at'],
-        'user' => filmoly_auth_get_user_data($user->ID),
+        'user' => filmoly_auth_get_user_data_for_response($user->ID),
     ], 200);
 }
 
@@ -524,7 +546,7 @@ function filmoly_auth_me(WP_REST_Request $request) {
 
     return new WP_REST_Response([
         'success' => true,
-        'user' => filmoly_auth_get_user_data($user_id),
+        'user' => filmoly_auth_get_user_data_for_response($user_id),
     ], 200);
 }
 
@@ -590,8 +612,8 @@ function filmoly_auth_reset_password(WP_REST_Request $request) {
         return filmoly_auth_error('invalid_code', 'El código no es válido.', 400);
     }
 
-    if (strlen($new_password) < 8) {
-        return filmoly_auth_error('invalid_password', 'La nueva contraseña debe tener al menos 8 caracteres.', 400);
+    if (strlen($new_password) < 6) {
+        return filmoly_auth_error('invalid_password', 'La nueva contraseña debe tener al menos 6 caracteres.', 400);
     }
 
     $user = filmoly_auth_find_user_by_login_or_email($login);

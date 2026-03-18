@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "andLabel": MessageLookupByLibrary.simpleMessage("和"),
     "appName": MessageLookupByLibrary.simpleMessage("Filmoly"),
     "appVersion10Code": MessageLookupByLibrary.simpleMessage("v1.0.0"),
     "appVersion10Description": MessageLookupByLibrary.simpleMessage(
@@ -81,10 +82,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "Password reset successfully.",
     ),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
-      "At least 8 characters",
+      "At least 6 characters",
     ),
     "passwordMismatch": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
+    ),
+    "registerMarketingConsentAccept": MessageLookupByLibrary.simpleMessage(
+      "我同意接收促销和商业信息",
+    ),
+    "registerTermsAndConditionsAccept": MessageLookupByLibrary.simpleMessage(
+      "我已阅读并接受",
+    ),
+    "registerTermsAndConditionsError": MessageLookupByLibrary.simpleMessage(
+      "您必须接受条款和条件和隐私政策",
     ),
     "sendCode": MessageLookupByLibrary.simpleMessage("Send code"),
     "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
@@ -94,7 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userOrEmail": MessageLookupByLibrary.simpleMessage("Username or email"),
     "username": MessageLookupByLibrary.simpleMessage("Username"),
     "usernameMinLength": MessageLookupByLibrary.simpleMessage(
-      "At least 3 characters",
+      "At least 4 characters",
     ),
     "verificationCode": MessageLookupByLibrary.simpleMessage(
       "Verification code (6 digits)",

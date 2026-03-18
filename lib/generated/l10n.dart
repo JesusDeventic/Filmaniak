@@ -239,10 +239,10 @@ class S {
     );
   }
 
-  /// `At least 8 characters`
+  /// `At least 6 characters`
   String get passwordMinLength {
     return Intl.message(
-      'At least 8 characters',
+      'At least 6 characters',
       name: 'passwordMinLength',
       desc: '',
       args: [],
@@ -259,14 +259,49 @@ class S {
     );
   }
 
-  /// `At least 3 characters`
+  /// `At least 4 characters`
   String get usernameMinLength {
     return Intl.message(
-      'At least 3 characters',
+      'At least 4 characters',
       name: 'usernameMinLength',
       desc: '',
       args: [],
     );
+  }
+
+  /// `I have read and accept the`
+  String get registerTermsAndConditionsAccept {
+    return Intl.message(
+      'I have read and accept the',
+      name: 'registerTermsAndConditionsAccept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I agree to receive promotions and marketing communications`
+  String get registerMarketingConsentAccept {
+    return Intl.message(
+      'I agree to receive promotions and marketing communications',
+      name: 'registerMarketingConsentAccept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You must accept the terms and conditions and privacy policy`
+  String get registerTermsAndConditionsError {
+    return Intl.message(
+      'You must accept the terms and conditions and privacy policy',
+      name: 'registerTermsAndConditionsError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `and`
+  String get andLabel {
+    return Intl.message('and', name: 'andLabel', desc: '', args: []);
   }
 
   /// `Code must be 6 digits`
@@ -864,6 +899,156 @@ class S {
     return Intl.message(
       'You can delete your account from your account settings in the app. This removes everything related to your user. This action is irreversible.',
       name: 'faq3Answer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username must be 4-20 characters and can only contain letters, numbers, hyphens and underscores.`
+  String get errorAuthInvalidUsername {
+    return Intl.message(
+      'Username must be 4-20 characters and can only contain letters, numbers, hyphens and underscores.',
+      name: 'errorAuthInvalidUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The email is not valid.`
+  String get errorAuthInvalidEmail {
+    return Intl.message(
+      'The email is not valid.',
+      name: 'errorAuthInvalidEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 6 characters.`
+  String get errorAuthInvalidPassword {
+    return Intl.message(
+      'Password must be at least 6 characters.',
+      name: 'errorAuthInvalidPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `That username already exists.`
+  String get errorAuthUsernameExists {
+    return Intl.message(
+      'That username already exists.',
+      name: 'errorAuthUsernameExists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `That email is already registered.`
+  String get errorAuthEmailExists {
+    return Intl.message(
+      'That email is already registered.',
+      name: 'errorAuthEmailExists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration could not be completed. Please try again.`
+  String get errorAuthRegisterFailed {
+    return Intl.message(
+      'Registration could not be completed. Please try again.',
+      name: 'errorAuthRegisterFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not create session. Please try again later.`
+  String get errorAuthSessionFailed {
+    return Intl.message(
+      'Could not create session. Please try again later.',
+      name: 'errorAuthSessionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Too many attempts. Please try again later.`
+  String get errorAuthTooManyRequests {
+    return Intl.message(
+      'Too many attempts. Please try again later.',
+      name: 'errorAuthTooManyRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Required fields are missing.`
+  String get errorAuthMissingFields {
+    return Intl.message(
+      'Required fields are missing.',
+      name: 'errorAuthMissingFields',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Incorrect username or password.`
+  String get errorAuthInvalidCredentials {
+    return Intl.message(
+      'Incorrect username or password.',
+      name: 'errorAuthInvalidCredentials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You must provide username or email.`
+  String get errorAuthMissingLogin {
+    return Intl.message(
+      'You must provide username or email.',
+      name: 'errorAuthMissingLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The code is not valid.`
+  String get errorAuthInvalidCode {
+    return Intl.message(
+      'The code is not valid.',
+      name: 'errorAuthInvalidCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have exceeded the maximum number of attempts.`
+  String get errorAuthTooManyAttempts {
+    return Intl.message(
+      'You have exceeded the maximum number of attempts.',
+      name: 'errorAuthTooManyAttempts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The code has expired.`
+  String get errorAuthExpiredCode {
+    return Intl.message(
+      'The code has expired.',
+      name: 'errorAuthExpiredCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred. Please try again.`
+  String get errorAuthGeneric {
+    return Intl.message(
+      'An error occurred. Please try again.',
+      name: 'errorAuthGeneric',
       desc: '',
       args: [],
     );

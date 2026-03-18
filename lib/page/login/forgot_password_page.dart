@@ -1,4 +1,5 @@
 import 'package:filmoly/api/filmoly_api.dart';
+import 'package:filmoly/core/api_error_messages.dart';
 import 'package:filmoly/core/global_functions.dart';
 import 'package:filmoly/controller/recaptcha_controller.dart';
 import 'package:filmoly/generated/l10n.dart';
@@ -60,7 +61,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         showCustomSnackBar(S.current.codeSent, type: 1);
         RecaptchaService.hideBadge();
       } else {
-        showCustomSnackBar(result['message'] as String? ?? S.current.error, type: -1);
+        showCustomSnackBar(getAuthErrorMessage(result['code'] as String?), type: -1);
       }
     } finally {
       if (mounted) setState(() => _isLoadingSend = false);
@@ -87,7 +88,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         showCustomSnackBar(S.current.passwordChanged, type: 1);
         context.go(AppRoutes.login);
       } else {
-        showCustomSnackBar(result['message'] as String? ?? S.current.error, type: -1);
+        showCustomSnackBar(getAuthErrorMessage(result['code'] as String?), type: -1);
       }
     } finally {
       if (mounted) setState(() => _isLoadingConfirm = false);
@@ -153,7 +154,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             width: double.infinity,
                             child: OutlinedButton(
                               onPressed: () => context.go(AppRoutes.login),
-                              child: Text(S.current.signIn),
+                              child: Text(S.current.back),
                             ),
                           ),
                             ],
@@ -195,7 +196,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             textInputAction: TextInputAction.next,
                             validator: (v) {
                               if (v == null || v.isEmpty) return S.current.fieldRequired;
-                              if (v.length < 8) return S.current.passwordMinLength;
+                              if (v.length < 6) return S.current.passwordMinLength;
                               return null;
                             },
                           ),
