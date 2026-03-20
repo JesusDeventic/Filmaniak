@@ -558,39 +558,14 @@ class _PrivateChatPageState extends State<PrivateChatPage> {
   }
 
   void _confirmDelete(PrivateMessage msg) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(S.current.messagesDelete),
-        content: Text(S.current.messagesDeleteConfirm),
-        actions: [
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.pop(ctx),
-                  child: Text(S.current.buttonCancel),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                        Theme.of(context).colorScheme.error),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                    _deleteMessage(msg);
-                  },
-                  child: Text(S.current.buttonConfirm),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    showConfirmDialogGlobal(
+      context,
+      title: S.current.messagesDelete,
+      message: S.current.messagesDeleteConfirm,
+      destructive: true,
+    ).then((confirmed) {
+      if (confirmed) _deleteMessage(msg);
+    });
   }
 }
 

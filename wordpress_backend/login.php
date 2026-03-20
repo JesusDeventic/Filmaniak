@@ -116,6 +116,77 @@ function filmoly_auth_get_json_params(WP_REST_Request $request) {
     return is_array($params) ? $params : [];
 }
 
+/**
+ * Limpieza previa al borrado de usuario.
+ * Se usa para acciones que pueden requerir datos aún existentes.
+ */
+function filmoly_cleanup_user_before_delete($user_id) {
+    $user_id = (int) $user_id;
+    if ($user_id <= 0) {
+        return;
+    }
+
+    if (function_exists('filmoly_delete_old_avatar_if_exists')) {
+        filmoly_delete_old_avatar_if_exists($user_id);
+    }
+}
+add_action('delete_user', 'filmoly_cleanup_user_before_delete');
+
+/**
+ * Limpieza posterior al borrado de usuario.
+ * Aplica tanto a borrado desde endpoint como desde wp-admin.
+ */
+function filmoly_cleanup_deleted_user_data($user_id) {
+    global $wpdb;
+
+    $user_id = (int) $user_id;
+    if ($user_id <= 0) {
+        return;
+    }
+
+    $sessions_table = $wpdb->prefix . 'filmoly_sessions';
+    $wpdb->delete(
+        $sessions_table,
+        ['user_id' => $user_id],
+        ['%d']
+    );
+
+    $resets_table = $wpdb->prefix . 'filmoly_password_resets';
+    $wpdb->delete(
+        $resets_table,
+        ['user_id' => $user_id],
+        ['%d']
+    );
+
+    $private_messages_table = $wpdb->prefix . 'filmoly_private_messages';
+    $wpdb->query($wpdb->prepare(
+        "DELETE FROM {$private_messages_table} WHERE sender_id = %d OR recipient_id = %d",
+        $user_id,
+        $user_id
+    ));
+
+    $notifications_table = $wpdb->prefix . 'filmoly_notifications';
+    $wpdb->delete(
+        $notifications_table,
+        ['user_id' => $user_id],
+        ['%d']
+    );
+
+    $comments = get_comments([
+        'user_id' => $user_id,
+        'status' => 'all',
+        'number' => 0,
+        'fields' => 'ids',
+    ]);
+
+    if (!empty($comments)) {
+        foreach ($comments as $comment_id) {
+            wp_delete_comment($comment_id, true);
+        }
+    }
+}
+add_action('deleted_user', 'filmoly_cleanup_deleted_user_data');
+
 function filmoly_auth_get_bearer_token(WP_REST_Request $request) {
     $auth_header = $request->get_header('authorization');
 
@@ -764,41 +835,6 @@ function filmoly_auth_delete_account(WP_REST_Request $request) {
     // Confirmar contraseña actual
     if (!wp_check_password($password, $user->user_pass, $user->ID)) {
         return filmoly_auth_error('wrong_password', 'La contraseña actual no es correcta.', 401);
-    }
-
-    // Limpiar sesiones
-    $sessions_table = $wpdb->prefix . 'filmoly_sessions';
-    $wpdb->delete(
-        $sessions_table,
-        ['user_id' => $user->ID],
-        ['%d']
-    );
-
-    // Limpiar códigos de reset
-    $resets_table = $wpdb->prefix . 'filmoly_password_resets';
-    $wpdb->delete(
-        $resets_table,
-        ['user_id' => $user->ID],
-        ['%d']
-    );
-  
-  // Borrar comentarios del usuario
-  $comments = get_comments([
-	  'user_id' => $user->ID,
-	  'status' => 'all',
-	  'number' => 0,
-	  'fields' => 'ids',
-  ]);
-
-  if (!empty($comments)) {
-	  foreach ($comments as $comment_id) {
-		  wp_delete_comment($comment_id, true); // true = borrado permanente
-	  }
-  }
-
-    // Borrar avatar del disco si existe
-    if (function_exists('filmoly_delete_old_avatar_if_exists')) {
-        filmoly_delete_old_avatar_if_exists($user->ID);
     }
 
     // Cargar función de borrado de usuarios

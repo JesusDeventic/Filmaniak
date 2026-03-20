@@ -68,10 +68,21 @@ class _PrivateConversationsPageState extends State<PrivateConversationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = MediaQuery.of(context).size.width > 800;
     return Scaffold(
       appBar: AppBar(
         title: Text(S.current.privateMessages),
         centerTitle: false,
+        actions: [
+          if (isDesktop)
+            Tooltip(
+              message: S.current.buttonReloadNotifications,
+              child: IconButton(
+                icon: const Icon(Icons.refresh_rounded),
+                onPressed: _load,
+              ),
+            ),
+        ],
       ),
       body: SafeArea(
         child: _loading

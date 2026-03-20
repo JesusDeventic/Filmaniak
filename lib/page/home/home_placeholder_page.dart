@@ -407,57 +407,36 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                   title: Text(S.current.userSectionSessionClose),
                   onTap: () {
                     final router = GoRouter.of(context);
-                    showDialog(
-                      context: context,
-                      builder: (c) => AlertDialog(
-                        title: Text(S.current.userSectionSessionClose),
-                        content: Text(S.current.dialogCloseSessionContent),
-                        actions: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () => Navigator.pop(c),
-                                  child: Text(S.current.actionNo),
-                                ),
+                    showConfirmDialogGlobal(
+                      context,
+                      title: S.current.userSectionSessionClose,
+                      message: S.current.dialogCloseSessionContent,
+                    ).then((confirmed) async {
+                      if (!confirmed) return;
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        barrierColor: Colors.black26,
+                        builder: (ctx) => PopScope(
+                          canPop: false,
+                          child: Dialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            insetPadding: EdgeInsets.zero,
+                            child: SizedBox.expand(
+                              child: Center(
+                                child: const CircularProgressIndicator(strokeWidth: 2),
                               ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: () async {
-                                    Navigator.pop(c);
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      barrierColor: Colors.black26,
-                                      builder: (ctx) => PopScope(
-                                        canPop: false,
-                                        child: Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          child: SizedBox.expand(
-                                            child: Center(
-                                              child: const CircularProgressIndicator(strokeWidth: 2),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                    await logoutUser();
-                                    if (context.mounted) {
-                                      Navigator.of(context).pop();
-                                    }
-                                    router.go(AppRoutes.login);
-                                  },
-                                  child: Text(S.current.actionYes),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ],
-                      ),
-                    );
+                        ),
+                      );
+                      await logoutUser();
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                      router.go(AppRoutes.login);
+                    });
                   },
                 ),
                 ListTile(
@@ -476,36 +455,14 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
     );
   }
 
-  void _showExitAppDialog() {
-    showDialog(
-      context: context,
-      builder: (c) => AlertDialog(
-        title: Text(S.current.dialogCloseAppTitle),
-        content: Text('${S.current.dialogCloseAppTitle}?'),
-        actions: [
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(c),
-                  child: Text(S.current.actionNo),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pop(c);
-                    exit(0);
-                  },
-                  child: Text(S.current.actionYes),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+  Future<void> _showExitAppDialog() async {
+    final confirmed = await showConfirmDialogGlobal(
+      context,
+      title: S.current.dialogCloseAppTitle,
+      message: '${S.current.dialogCloseAppTitle}?',
+      destructive: true,
     );
+    if (confirmed) exit(0);
   }
 
   Widget _buildUserProfile() {
@@ -556,8 +513,15 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.of(context).size.width > 800;
-    return Scaffold(
-      appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          await _showExitAppDialog();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
         toolbarHeight: 60,
         leadingWidth: 0,
         leading: const SizedBox.shrink(),
@@ -614,8 +578,9 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: isDesktop ? _buildDesktopBody() : _buildMobileBody(),
+        body: SafeArea(
+          child: isDesktop ? _buildDesktopBody() : _buildMobileBody(),
+        ),
       ),
     );
   }
