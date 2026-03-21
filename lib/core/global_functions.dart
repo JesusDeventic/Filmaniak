@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:filmaniak/api/filmaniak_api.dart';
 import 'package:filmaniak/api/firebase_web_config.dart';
 import 'package:filmaniak/core/global_variables.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 import 'package:filmaniak/core/secure_storage.dart';
 import 'package:filmaniak/core/user_preferences.dart';
@@ -14,6 +15,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:filmaniak/main.dart';
 import 'package:filmaniak/providers/language_provider.dart';
+
 final _secureStorage = FilmaniakSecureStorage();
 
 Future<void> loadAppVersion() async {
@@ -29,7 +31,9 @@ Future<void> logoutUser() async {
   // Borrar token FCM para desuscribirse de notificaciones
   if (kIsWeb || Platform.isAndroid || Platform.isIOS) {
     try {
-      await FirebaseMessaging.instance.deleteToken();
+      if (Firebase.apps.isNotEmpty) {
+        await FirebaseMessaging.instance.deleteToken();
+      }
     } catch (_) {
       // ignorar errores de FCM en logout
     }
@@ -62,6 +66,7 @@ Future<bool> loginUser() async {
 Future<void> syncPushConfig() async {
   if (!(kIsWeb || Platform.isAndroid || Platform.isIOS)) return;
   if (globalUserToken.isEmpty) return;
+  if (Firebase.apps.isEmpty) return;
   try {
     final fcm = FirebaseMessaging.instance;
 
@@ -71,6 +76,8 @@ Future<void> syncPushConfig() async {
       return;
     }
 
+    // Mismo criterio que Fitcron (app_backend checkLoginUserByTopic): idioma de la app
+    // (Provider → prefs), no el campo del usuario en la API/DB.
     String langCode = 'en';
     String? previousLangCode;
     try {
@@ -79,9 +86,11 @@ Future<void> syncPushConfig() async {
         final lp = Provider.of<LanguageProvider>(ctx, listen: false);
         langCode = lp.currentLanguage;
         previousLangCode = lp.previousLanguage;
+      } else {
+        langCode = await UserPreferences().getLanguage() ?? 'en';
       }
     } catch (_) {
-      // Al volver de ajustes del sistema el árbol puede estar inestable.
+      langCode = await UserPreferences().getLanguage() ?? 'en';
     }
 
     String? fcmToken;
@@ -303,7 +312,8 @@ String formatMessageTimestamp(DateTime dt) {
   final localDt = dt.toLocal();
   final now = DateTime.now();
 
-  final isToday = localDt.year == now.year &&
+  final isToday =
+      localDt.year == now.year &&
       localDt.month == now.month &&
       localDt.day == now.day;
 

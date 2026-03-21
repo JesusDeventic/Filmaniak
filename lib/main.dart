@@ -145,16 +145,27 @@ class _FilmaniakAppState extends State<FilmaniakApp> {
 //      - `package_name` en `android/app/google-services.json`
 //    - iOS:
 //      - `PRODUCT_BUNDLE_IDENTIFIER` en Xcode (Runner)
-//      - `bundle_id` en `ios/Runner/GoogleService-Info.plist`
+//      - `BUNDLE_ID` en `ios/Runner/GoogleService-Info.plist` (debe coincidir)
 //
-// 3) Firebase (nuevo proyecto)
-//    - Reemplazar:
+// 3) Firebase (nuevo proyecto en console.firebase.google.com)
+//    - Descargar y colocar:
 //      - `android/app/google-services.json`
 //      - `ios/Runner/GoogleService-Info.plist`
-//    - Web:
-//      - Actualizar `lib/api/firebase_web_config.dart` (`apiKey`, `appId`,
-//        `projectId`, `messagingSenderId`, etc.)
-//      - Actualizar `webVapidKey`
+//    - iOS (imprescindible para que arranque y haya push):
+//      - En Xcode, el `GoogleService-Info.plist` debe estar en el target Runner
+//        (Build Phases → Copy Bundle Resources). Si solo está en disco, falla
+//        `FirebaseApp.configure()` en `ios/Runner/AppDelegate.swift`.
+//      - `ios/Runner/Runner.entitlements`: `aps-environment` (development en
+//        debug; production para TestFlight/App Store).
+//      - En Firebase Console → Project settings → Cloud Messaging → Apple:
+//        subir la clave APNs (.p8) de Apple Developer (Keys). Una misma clave
+//        vale para varias apps del mismo equipo; sirve para que FCM envíe a
+//        Apple (no sustituye al plist en la app).
+//    - Web: `lib/api/firebase_web_config.dart` (FirebaseOptions + `webVapidKey`).
+//    - Android/iOS en Dart: `Firebase.initializeApp()` sin opciones; el plist
+//      y `google-services.json` bastan. `AppDelegate` llama `FirebaseApp.configure()`.
+//    - `ios/Podfile`: `platform :ios` acorde a Firebase (p. ej. 15+) y
+//      `use_modular_headers!` en el target Runner si usas los pods actuales.
 //
 // 4) Backend WordPress / REST
 //    - Cambiar `filmaniakBaseUrl` en `lib/api/filmaniak_api.dart`.
@@ -178,11 +189,12 @@ class _FilmaniakAppState extends State<FilmaniakApp> {
 //      - En Nginx Proxy Manager, aplicar CORS en Custom Location (no en Advanced
 //        global si tu plantilla no aplica `add_header` ahi).
 //
-// 7) Push y notificaciones
-//    - Revisar `wordpress_backend/notificaciones.php` y
+// 7) Push y notificaciones (WordPress + FCM)
+//    - Backend: `wordpress_backend/notificaciones.php`,
 //      `wordpress_backend/WebPage_NotificacionesPush.php`.
-//    - Confirmar que tokens FCM, envio push y textos traducidos funcionen en
-//      todos los idiomas activos.
+//    - Tras cambiar bundle ID / Firebase, comprobar registro de token en BD y
+//      envío por idioma (topics). En iOS, si no hay token, revisar plist en el
+//      target, entitlements APNs y clave .p8 en la consola de Firebase.
 //
 // 8) Localizacion y generacion de codigo
 //    - Tras editar ARB, regenerar l10n:

@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 
-/// Configuración necesaria para que funcionen las notificaciones en Web.
-///
-/// IMPORTANTE:
-/// - Rellena `webFirebaseOptions` con la configuración de tu *Web app* en Firebase.
-/// - Rellena `webVapidKey` desde Firebase Console → Cloud Messaging → Web Push certificates.
+/// Solo Web necesita `FirebaseOptions` explícitas; iOS/Android usan
+/// `GoogleService-Info.plist` / `google-services.json` (y en iOS `FirebaseApp.configure()`).
 class FilmaniakFirebaseWebConfig {
   static const FirebaseOptions webFirebaseOptions = FirebaseOptions(
     apiKey: 'AIzaSyBiKIkRHFKH_cr2cwCUHAzu8vWKMtq_EkM',
@@ -15,7 +12,6 @@ class FilmaniakFirebaseWebConfig {
     storageBucket: 'filmaniak-app.firebasestorage.app',
   );
 
-  // Pégala aquí (Firebase Console → Cloud Messaging → Web Push certificates).
   static const String webVapidKey =
       'BC-uxoWgohdFoUKoQumf5qlFQzaA6dpQYB4UcKlCNLl0-uIp1Ey-KuAF7RtAxQrxUSFxTCBxszUocEyUyoPLDSk';
 }
