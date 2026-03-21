@@ -20,75 +20,354 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'it';
 
+  static String m0(seconds) =>
+      "Nome utente o password errati.\nAttendi ${seconds} secondi prima di riprovare";
+
+  static String m1(username) => "Profilo di @${username} su Filmaniak";
+
+  static String m2(username) => "QR di @${username}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "accountSettings": MessageLookupByLibrary.simpleMessage(
+      "Impostazioni account",
+    ),
+    "actionNo": MessageLookupByLibrary.simpleMessage("No"),
+    "actionYes": MessageLookupByLibrary.simpleMessage("Sì"),
     "andLabel": MessageLookupByLibrary.simpleMessage("e"),
     "appName": MessageLookupByLibrary.simpleMessage("Filmaniak"),
     "appVersion10Code": MessageLookupByLibrary.simpleMessage("v1.0.0"),
     "appVersion10Description": MessageLookupByLibrary.simpleMessage(
-      "· Initial release of Filmaniak.\n· Login, register and password recovery.\n· Connection with La Retroteca (WordPress).",
+      "·Versione iniziale di Filmaniak.",
     ),
     "appVersionChangeLogTitle": MessageLookupByLibrary.simpleMessage(
-      "Changelog",
+      "Registro modifiche",
     ),
-    "back": MessageLookupByLibrary.simpleMessage("Back"),
+    "back": MessageLookupByLibrary.simpleMessage("Indietro"),
+    "bioLabel": MessageLookupByLibrary.simpleMessage("Bio"),
+    "buttonCancel": MessageLookupByLibrary.simpleMessage("Annulla"),
     "buttonChangePassword": MessageLookupByLibrary.simpleMessage(
       "Cambia password",
     ),
-    "close": MessageLookupByLibrary.simpleMessage("Close"),
+    "buttonClose": MessageLookupByLibrary.simpleMessage("Chiudi"),
+    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Conferma"),
+    "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage(
+      "Elimina account",
+    ),
+    "buttonDeleteAvatar": MessageLookupByLibrary.simpleMessage(
+      "Rimuovi avatar",
+    ),
+    "buttonReloadNotifications": MessageLookupByLibrary.simpleMessage(
+      "Aggiorna",
+    ),
+    "close": MessageLookupByLibrary.simpleMessage("Chiudi"),
     "code6Digits": MessageLookupByLibrary.simpleMessage(
-      "Code must be 6 digits",
+      "Il codice deve avere 6 cifre",
     ),
     "codeSent": MessageLookupByLibrary.simpleMessage(
-      "If the account exists, a code has been sent to the email.",
+      "Se l\'account esiste, è stato inviato un codice all\'email",
     ),
-    "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
-    "confirmPassword": MessageLookupByLibrary.simpleMessage("Confirm password"),
+    "collapseMenu": MessageLookupByLibrary.simpleMessage("Comprimi"),
+    "confirm": MessageLookupByLibrary.simpleMessage("Conferma"),
+    "confirmPassword": MessageLookupByLibrary.simpleMessage(
+      "Conferma password",
+    ),
+    "cookiePolicyLabel": MessageLookupByLibrary.simpleMessage("Cookie policy"),
+    "copiedProfileLinkSnackbar": MessageLookupByLibrary.simpleMessage(
+      "Link copiato",
+    ),
+    "copyProfileLink": MessageLookupByLibrary.simpleMessage("Copia link"),
     "currentAppVersionText": MessageLookupByLibrary.simpleMessage(
-      "Current version",
+      "Versione attuale",
     ),
+    "currentPassword": MessageLookupByLibrary.simpleMessage("Password attuale"),
+    "currentServerVersionText": MessageLookupByLibrary.simpleMessage(
+      "Versione disponibile",
+    ),
+    "dateFormat": MessageLookupByLibrary.simpleMessage("Formato data"),
+    "deleteAllNotifications": MessageLookupByLibrary.simpleMessage(
+      "Elimina tutte le notifiche",
+    ),
+    "dialogCloseAppContent": MessageLookupByLibrary.simpleMessage(
+      "Vuoi davvero uscire dall\'app?",
+    ),
+    "dialogCloseAppTitle": MessageLookupByLibrary.simpleMessage(
+      "Esci dall\'app",
+    ),
+    "dialogCloseSessionContent": MessageLookupByLibrary.simpleMessage(
+      "Vuoi davvero uscire?",
+    ),
+    "dialogConfirmSave": MessageLookupByLibrary.simpleMessage(
+      "Salvare le modifiche?",
+    ),
+    "dialogDeleteAccount": MessageLookupByLibrary.simpleMessage(
+      "Vuoi davvero eliminare il tuo account? Questa azione è irreversibile.\nInserisci la password per confermare.",
+    ),
+    "dialogDeleteAccountPassword": MessageLookupByLibrary.simpleMessage(
+      "Password",
+    ),
+    "dialogErrorAppVersion": MessageLookupByLibrary.simpleMessage(
+      "È disponibile una nuova versione di Filmaniak.\nAggiorna l\'app per continuare",
+    ),
+    "dialogErrorServerConnection": MessageLookupByLibrary.simpleMessage(
+      "Impossibile connettersi al server Filmaniak",
+    ),
+    "dialogErrorServerMaintenance": MessageLookupByLibrary.simpleMessage(
+      "L\'app è in manutenzione. Riprova più tardi",
+    ),
+    "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("Errore"),
+    "dialogWarningTitle": MessageLookupByLibrary.simpleMessage("Attenzione"),
     "displayName": MessageLookupByLibrary.simpleMessage(
-      "Display name (optional)",
+      "Nome visualizzato (facoltativo)",
     ),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
-    "error": MessageLookupByLibrary.simpleMessage("Error"),
-    "fieldRequired": MessageLookupByLibrary.simpleMessage(
-      "This field is required",
+    "errorAuthDeleteAccountFailed": MessageLookupByLibrary.simpleMessage(
+      "Impossibile eliminare l\'account. Riprova",
     ),
-    "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot password?"),
-    "invalidEmail": MessageLookupByLibrary.simpleMessage("Invalid email"),
-    "keepSession": MessageLookupByLibrary.simpleMessage("Keep me signed in"),
-    "language": MessageLookupByLibrary.simpleMessage("Language"),
-    "languageArabic": MessageLookupByLibrary.simpleMessage("Arabic"),
-    "languageCatalan": MessageLookupByLibrary.simpleMessage("Catalan"),
-    "languageChinese": MessageLookupByLibrary.simpleMessage("Chinese"),
-    "languageDutch": MessageLookupByLibrary.simpleMessage("Dutch"),
-    "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
-    "languageFrench": MessageLookupByLibrary.simpleMessage("French"),
-    "languageGerman": MessageLookupByLibrary.simpleMessage("German"),
+    "errorAuthEmailExists": MessageLookupByLibrary.simpleMessage(
+      "Questa email è già registrata",
+    ),
+    "errorAuthExpiredCode": MessageLookupByLibrary.simpleMessage(
+      "Il codice è scaduto",
+    ),
+    "errorAuthGeneric": MessageLookupByLibrary.simpleMessage(
+      "Si è verificato un errore. Riprova",
+    ),
+    "errorAuthInvalidCode": MessageLookupByLibrary.simpleMessage(
+      "Il codice non è valido",
+    ),
+    "errorAuthInvalidCredentials": MessageLookupByLibrary.simpleMessage(
+      "Nome utente o password errati",
+    ),
+    "errorAuthInvalidEmail": MessageLookupByLibrary.simpleMessage(
+      "L\'email non è valida",
+    ),
+    "errorAuthInvalidPassword": MessageLookupByLibrary.simpleMessage(
+      "La password deve avere almeno 6 caratteri",
+    ),
+    "errorAuthInvalidUsername": MessageLookupByLibrary.simpleMessage(
+      "Il nome utente deve avere tra 4 e 20 caratteri e può contenere solo lettere, numeri, trattini e underscore.",
+    ),
+    "errorAuthMissingFields": MessageLookupByLibrary.simpleMessage(
+      "Mancano campi obbligatori",
+    ),
+    "errorAuthMissingLogin": MessageLookupByLibrary.simpleMessage(
+      "Indica nome utente o email",
+    ),
+    "errorAuthRegisterFailed": MessageLookupByLibrary.simpleMessage(
+      "Impossibile completare la registrazione. Riprova",
+    ),
+    "errorAuthSessionFailed": MessageLookupByLibrary.simpleMessage(
+      "Impossibile creare la sessione. Riprova più tardi",
+    ),
+    "errorAuthTooManyAttempts": MessageLookupByLibrary.simpleMessage(
+      "Hai superato il numero massimo di tentativi",
+    ),
+    "errorAuthTooManyRequests": MessageLookupByLibrary.simpleMessage(
+      "Troppi tentativi. Riprova più tardi",
+    ),
+    "errorAuthUsernameExists": MessageLookupByLibrary.simpleMessage(
+      "Questo nome utente esiste già",
+    ),
+    "errorAuthWrongPassword": MessageLookupByLibrary.simpleMessage(
+      "Password errata",
+    ),
+    "errorProcessingImage": MessageLookupByLibrary.simpleMessage(
+      "Impossibile elaborare l\'immagine",
+    ),
+    "expandMenu": MessageLookupByLibrary.simpleMessage("Espandi"),
+    "faq1Answer": MessageLookupByLibrary.simpleMessage(
+      "È un\'app con un database di film, serie e altri contenuti audiovisivi, con strumenti per interagire con altri membri, creare liste, valutazioni e recensioni, tra le altre funzioni.",
+    ),
+    "faq1Question": MessageLookupByLibrary.simpleMessage("Cos\'è Filmaniak?"),
+    "faq2Answer": MessageLookupByLibrary.simpleMessage(
+      "No, Filmaniak non è un\'app di streaming; è solo un database con varie funzionalità sui contenuti.",
+    ),
+    "faq2Question": MessageLookupByLibrary.simpleMessage(
+      "Si possono guardare film e serie?",
+    ),
+    "faq3Answer": MessageLookupByLibrary.simpleMessage(
+      "Puoi eliminare il tuo account dalle impostazioni dell\'account nell\'app. Vengono rimossi tutti i dati associati. Questa azione è irreversibile.",
+    ),
+    "faq3Question": MessageLookupByLibrary.simpleMessage(
+      "Come elimino il mio account?",
+    ),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage(
+      "Questo campo è obbligatorio",
+    ),
+    "forgotPassword": MessageLookupByLibrary.simpleMessage(
+      "Password dimenticata?",
+    ),
+    "generalSettings": MessageLookupByLibrary.simpleMessage(
+      "Impostazioni generali",
+    ),
+    "generalSettingsOpenSystemSettingsError":
+        MessageLookupByLibrary.simpleMessage(
+          "Impossibile aprire le impostazioni di sistema",
+        ),
+    "generalSettingsSaveErrorGeneric": MessageLookupByLibrary.simpleMessage(
+      "Impossibile salvare le impostazioni. Controlla la connessione e riprova",
+    ),
+    "generalSettingsSaveErrorSession": MessageLookupByLibrary.simpleMessage(
+      "Impossibile salvare le impostazioni. Accedi di nuovo",
+    ),
+    "generalSettingsSaveSuccess": MessageLookupByLibrary.simpleMessage(
+      "Impostazioni salvate correttamente",
+    ),
+    "goToHome": MessageLookupByLibrary.simpleMessage("Vai alla home"),
+    "invalidEmail": MessageLookupByLibrary.simpleMessage("Email non valida"),
+    "keepSession": MessageLookupByLibrary.simpleMessage("Resta connesso"),
+    "language": MessageLookupByLibrary.simpleMessage("Lingua"),
+    "languageArabic": MessageLookupByLibrary.simpleMessage("Arabo"),
+    "languageCatalan": MessageLookupByLibrary.simpleMessage("Catalano"),
+    "languageChinese": MessageLookupByLibrary.simpleMessage("Cinese"),
+    "languageDutch": MessageLookupByLibrary.simpleMessage("Olandese"),
+    "languageEnglish": MessageLookupByLibrary.simpleMessage("Inglese"),
+    "languageFrench": MessageLookupByLibrary.simpleMessage("Francese"),
+    "languageGerman": MessageLookupByLibrary.simpleMessage("Tedesco"),
     "languageHindi": MessageLookupByLibrary.simpleMessage("Hindi"),
-    "languageItalian": MessageLookupByLibrary.simpleMessage("Italian"),
-    "languageJapanese": MessageLookupByLibrary.simpleMessage("Japanese"),
-    "languageKorean": MessageLookupByLibrary.simpleMessage("Korean"),
-    "languagePolish": MessageLookupByLibrary.simpleMessage("Polish"),
-    "languagePortuguese": MessageLookupByLibrary.simpleMessage("Portuguese"),
-    "languageRomanian": MessageLookupByLibrary.simpleMessage("Romanian"),
-    "languageRussian": MessageLookupByLibrary.simpleMessage("Russian"),
-    "languageSpanish": MessageLookupByLibrary.simpleMessage("Spanish"),
-    "languageSwedish": MessageLookupByLibrary.simpleMessage("Swedish"),
-    "languageTurkish": MessageLookupByLibrary.simpleMessage("Turkish"),
-    "languageUkrainian": MessageLookupByLibrary.simpleMessage("Ukrainian"),
-    "logout": MessageLookupByLibrary.simpleMessage("Log out"),
-    "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
+    "languageIndonesian": MessageLookupByLibrary.simpleMessage("Indonesiano"),
+    "languageItalian": MessageLookupByLibrary.simpleMessage("Italiano"),
+    "languageJapanese": MessageLookupByLibrary.simpleMessage("Giapponese"),
+    "languageKorean": MessageLookupByLibrary.simpleMessage("Coreano"),
+    "languagePolish": MessageLookupByLibrary.simpleMessage("Polacco"),
+    "languagePortuguese": MessageLookupByLibrary.simpleMessage("Portoghese"),
+    "languageRomanian": MessageLookupByLibrary.simpleMessage("Rumeno"),
+    "languageRussian": MessageLookupByLibrary.simpleMessage("Russo"),
+    "languageSpanish": MessageLookupByLibrary.simpleMessage("Spagnolo"),
+    "languageSwedish": MessageLookupByLibrary.simpleMessage("Svedese"),
+    "languageTurkish": MessageLookupByLibrary.simpleMessage("Turco"),
+    "languageUkrainian": MessageLookupByLibrary.simpleMessage("Ucraino"),
+    "lastAccessChipPrefix": MessageLookupByLibrary.simpleMessage(
+      "Ultimo accesso",
+    ),
+    "legalNoticeLabel": MessageLookupByLibrary.simpleMessage("Note legali"),
+    "loading": MessageLookupByLibrary.simpleMessage("Caricamento..."),
+    "loginCountdownMessage": m0,
+    "logout": MessageLookupByLibrary.simpleMessage("Esci"),
+    "markAllAsRead": MessageLookupByLibrary.simpleMessage(
+      "Segna tutto come letto",
+    ),
+    "menuBarSectionSocial": MessageLookupByLibrary.simpleMessage("Social"),
+    "menuHome": MessageLookupByLibrary.simpleMessage("Home"),
+    "messageChangePasswordSuccess": MessageLookupByLibrary.simpleMessage(
+      "Password modificata correttamente",
+    ),
+    "messageDeleteAccountError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile eliminare l\'account",
+    ),
+    "messageDeleteAccountSuccess": MessageLookupByLibrary.simpleMessage(
+      "Account eliminato correttamente",
+    ),
+    "messageGeneralError": MessageLookupByLibrary.simpleMessage(
+      "Si è verificato un errore",
+    ),
+    "messageUpdateError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile aggiornare il profilo",
+    ),
+    "messageUpdateSuccess": MessageLookupByLibrary.simpleMessage(
+      "Profilo aggiornato correttamente",
+    ),
+    "messagesDelete": MessageLookupByLibrary.simpleMessage("Elimina"),
+    "messagesDeleteConfirm": MessageLookupByLibrary.simpleMessage(
+      "Eliminare questo messaggio?",
+    ),
+    "messagesDeleted": MessageLookupByLibrary.simpleMessage(
+      "Messaggio eliminato",
+    ),
+    "messagesEdit": MessageLookupByLibrary.simpleMessage("Modifica"),
+    "messagesEdited": MessageLookupByLibrary.simpleMessage("modificato"),
+    "messagesEmpty": MessageLookupByLibrary.simpleMessage(
+      "Non hai ancora conversazioni",
+    ),
+    "messagesErrorDelete": MessageLookupByLibrary.simpleMessage(
+      "Impossibile eliminare il messaggio",
+    ),
+    "messagesErrorEdit": MessageLookupByLibrary.simpleMessage(
+      "Impossibile modificare il messaggio",
+    ),
+    "messagesErrorSend": MessageLookupByLibrary.simpleMessage(
+      "Impossibile inviare il messaggio",
+    ),
+    "messagesNoMessages": MessageLookupByLibrary.simpleMessage(
+      "Ancora nessun messaggio. Scrivi qualcosa!",
+    ),
+    "messagesRead": MessageLookupByLibrary.simpleMessage("Letto"),
+    "messagesSend": MessageLookupByLibrary.simpleMessage("Invia"),
+    "messagesSent": MessageLookupByLibrary.simpleMessage("Inviato"),
+    "messagesTypeHint": MessageLookupByLibrary.simpleMessage(
+      "Scrivi un messaggio...",
+    ),
+    "newPassword": MessageLookupByLibrary.simpleMessage("Nuova password"),
+    "noMoreRecords": MessageLookupByLibrary.simpleMessage(
+      "Nessun altro record",
+    ),
+    "notificationDeleteAllAsk": MessageLookupByLibrary.simpleMessage(
+      "Eliminare tutte le notifiche?",
+    ),
+    "notificationMarkAllAsk": MessageLookupByLibrary.simpleMessage(
+      "Segnare tutte le notifiche come lette?",
+    ),
+    "notificationMarkReadError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile segnare la notifica come letta",
+    ),
+    "notificationMarkedRead": MessageLookupByLibrary.simpleMessage(
+      "Notifica segnata come letta.",
+    ),
+    "notificationsAllMarkedRead": MessageLookupByLibrary.simpleMessage(
+      "Tutte le notifiche segnate come lette",
+    ),
+    "notificationsDeletedError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile eliminare le notifiche",
+    ),
+    "notificationsDeletedOk": MessageLookupByLibrary.simpleMessage(
+      "Notifiche eliminate",
+    ),
+    "notificationsEmptyText": MessageLookupByLibrary.simpleMessage(
+      "Non hai notifiche",
+    ),
+    "notificationsLabel": MessageLookupByLibrary.simpleMessage("Notifiche"),
+    "notificationsPermissionHint": MessageLookupByLibrary.simpleMessage(
+      "Autorizzazioni notifiche del dispositivo",
+    ),
+    "notificationsPermissionOpenSettings": MessageLookupByLibrary.simpleMessage(
+      "Apri impostazioni",
+    ),
+    "notificationsStatusOff": MessageLookupByLibrary.simpleMessage("OFF"),
+    "notificationsStatusOn": MessageLookupByLibrary.simpleMessage("ON"),
+    "notificationsWebSettingsBody": MessageLookupByLibrary.simpleMessage(
+      "Per motivi di sicurezza non possiamo aprire le impostazioni del browser. Per consentire o bloccare le notifiche di questo sito, tocca il lucchetto accanto all\'indirizzo → Impostazioni sito → Notifiche.",
+    ),
+    "notificationsWebSettingsTitle": MessageLookupByLibrary.simpleMessage(
+      "Notifiche nel browser",
+    ),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordChanged": MessageLookupByLibrary.simpleMessage(
-      "Password reset successfully.",
+      "Password reimpostata correttamente",
     ),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
-      "At least 6 characters",
+      "Almeno 6 caratteri",
     ),
     "passwordMismatch": MessageLookupByLibrary.simpleMessage(
-      "Passwords do not match",
+      "Le password non coincidono",
+    ),
+    "privacyPoliciesLabel": MessageLookupByLibrary.simpleMessage(
+      "Informativa sulla privacy",
+    ),
+    "privateMessages": MessageLookupByLibrary.simpleMessage("Messaggi privati"),
+    "profileShareSubject": m1,
+    "publicProfileAppBarTitle": MessageLookupByLibrary.simpleMessage(
+      "Profilo utente",
+    ),
+    "pushNotificationsLabel": MessageLookupByLibrary.simpleMessage(
+      "Notifiche push",
+    ),
+    "qrTitle": m2,
+    "recaptchaError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile verificare il captcha. Riprova.",
+    ),
+    "registerError": MessageLookupByLibrary.simpleMessage(
+      "Errore di registrazione",
     ),
     "registerMarketingConsentAccept": MessageLookupByLibrary.simpleMessage(
       "Accetto di ricevere promozioni e comunicazioni commerciali",
@@ -97,22 +376,95 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ho letto e accetto i",
     ),
     "registerTermsAndConditionsError": MessageLookupByLibrary.simpleMessage(
-      "Devi accettare i termini e le condizioni e la politica sulla privacy",
+      "Devi accettare i termini e condizioni e l\'informativa sulla privacy",
     ),
-    "sendCode": MessageLookupByLibrary.simpleMessage("Send code"),
-    "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
-    "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
-    "success": MessageLookupByLibrary.simpleMessage("Success"),
-    "theme": MessageLookupByLibrary.simpleMessage("Theme"),
-    "userOrEmail": MessageLookupByLibrary.simpleMessage("Username or email"),
-    "username": MessageLookupByLibrary.simpleMessage("Username"),
+    "removeBirthdateTooltip": MessageLookupByLibrary.simpleMessage(
+      "Rimuovi data",
+    ),
+    "removeCountryTooltip": MessageLookupByLibrary.simpleMessage(
+      "Rimuovi paese",
+    ),
+    "retryPublicProfile": MessageLookupByLibrary.simpleMessage("Riprova"),
+    "sendCode": MessageLookupByLibrary.simpleMessage("Invia codice"),
+    "sendMessageTooltip": MessageLookupByLibrary.simpleMessage(
+      "Invia messaggio",
+    ),
+    "settingsLabel": MessageLookupByLibrary.simpleMessage("Impostazioni"),
+    "shareOption": MessageLookupByLibrary.simpleMessage("Condividi"),
+    "shareTooltip": MessageLookupByLibrary.simpleMessage("Condividi"),
+    "showMyProfile": MessageLookupByLibrary.simpleMessage(
+      "Vedi il mio profilo",
+    ),
+    "showQrOption": MessageLookupByLibrary.simpleMessage("Mostra QR"),
+    "signIn": MessageLookupByLibrary.simpleMessage("Accedi"),
+    "signUp": MessageLookupByLibrary.simpleMessage("Crea account"),
+    "socialMailLabel": MessageLookupByLibrary.simpleMessage("Email"),
+    "socialNetworksText": MessageLookupByLibrary.simpleMessage(
+      "Seguici sui social.",
+    ),
+    "socialTelegramLabel": MessageLookupByLibrary.simpleMessage("Telegram"),
+    "socialWebError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile aprire il link",
+    ),
+    "socialWhatsappError": MessageLookupByLibrary.simpleMessage(
+      "Impossibile aprire WhatsApp",
+    ),
+    "socialWhatsappLabel": MessageLookupByLibrary.simpleMessage("WhatsApp"),
+    "statusLabel": MessageLookupByLibrary.simpleMessage("Stato"),
+    "subjectSupport": MessageLookupByLibrary.simpleMessage(
+      "Contatto Filmaniak",
+    ),
+    "termsAndConditionsLabel": MessageLookupByLibrary.simpleMessage(
+      "Termini e condizioni",
+    ),
+    "textUserSupportDescription": MessageLookupByLibrary.simpleMessage(
+      "Hai bisogno di aiuto? Contattaci tramite uno dei nostri canali e ti risponderemo il prima possibile.",
+    ),
+    "textfieldDisplayNameLabel": MessageLookupByLibrary.simpleMessage(
+      "Nome visualizzato",
+    ),
+    "textfieldMailEmpty": MessageLookupByLibrary.simpleMessage(
+      "L\'email è obbligatoria",
+    ),
+    "textfieldMailError": MessageLookupByLibrary.simpleMessage(
+      "L\'email non è valida",
+    ),
+    "textfieldUserBirthdayLabel": MessageLookupByLibrary.simpleMessage(
+      "Data di nascita",
+    ),
+    "textfieldUserCountryLabel": MessageLookupByLibrary.simpleMessage("Paese"),
+    "theme": MessageLookupByLibrary.simpleMessage("Tema"),
+    "themeDark": MessageLookupByLibrary.simpleMessage("Modalità scura"),
+    "themeLight": MessageLookupByLibrary.simpleMessage("Modalità chiara"),
+    "userAvatar": MessageLookupByLibrary.simpleMessage("Avatar"),
+    "userDescription": MessageLookupByLibrary.simpleMessage("Descrizione"),
+    "userEmail": MessageLookupByLibrary.simpleMessage("Email"),
+    "userNotFoundPublicProfileText": MessageLookupByLibrary.simpleMessage(
+      "Non abbiamo trovato questo utente",
+    ),
+    "userOrEmail": MessageLookupByLibrary.simpleMessage("Nome utente o email"),
+    "userSectionContact": MessageLookupByLibrary.simpleMessage("Contatto"),
+    "userSectionFAQs": MessageLookupByLibrary.simpleMessage("FAQ"),
+    "userSectionSessionClose": MessageLookupByLibrary.simpleMessage("Esci"),
+    "userYears": MessageLookupByLibrary.simpleMessage("anni"),
+    "username": MessageLookupByLibrary.simpleMessage("Nome utente"),
     "usernameMinLength": MessageLookupByLibrary.simpleMessage(
-      "At least 4 characters",
+      "Almeno 4 caratteri",
     ),
     "verificationCode": MessageLookupByLibrary.simpleMessage(
-      "Verification code (6 digits)",
+      "Codice di verifica (6 cifre)",
     ),
-    "version": MessageLookupByLibrary.simpleMessage("Version"),
-    "welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
+    "version": MessageLookupByLibrary.simpleMessage("Versione"),
+    "webBlogHint": MessageLookupByLibrary.simpleMessage("https://tuosito.it"),
+    "webBlogLabel": MessageLookupByLibrary.simpleMessage("Sito web / blog"),
+    "weekStart": MessageLookupByLibrary.simpleMessage(
+      "Primo giorno della settimana",
+    ),
+    "weekStartMonday": MessageLookupByLibrary.simpleMessage("Lunedì"),
+    "weekStartSunday": MessageLookupByLibrary.simpleMessage("Domenica"),
+    "welcome": MessageLookupByLibrary.simpleMessage("Benvenuto/a!"),
+    "wrongCredentials": MessageLookupByLibrary.simpleMessage(
+      "Credenziali errate",
+    ),
   };
 }

@@ -64,9 +64,9 @@ class S {
     return Intl.message('Sign in', name: 'signIn', desc: '', args: []);
   }
 
-  /// `Sign up`
+  /// `Create account`
   String get signUp {
-    return Intl.message('Sign up', name: 'signUp', desc: '', args: []);
+    return Intl.message('Create account', name: 'signUp', desc: '', args: []);
   }
 
   /// `Username or email`
@@ -84,20 +84,20 @@ class S {
     return Intl.message('Password', name: 'password', desc: '', args: []);
   }
 
-  /// `Keep session started`
+  /// `Keep me signed in`
   String get keepSession {
     return Intl.message(
-      'Keep session started',
+      'Keep me signed in',
       name: 'keepSession',
       desc: '',
       args: [],
     );
   }
 
-  /// `Forgot password?`
+  /// `Forgot your password?`
   String get forgotPassword {
     return Intl.message(
-      'Forgot password?',
+      'Forgot your password?',
       name: 'forgotPassword',
       desc: '',
       args: [],
@@ -219,24 +219,14 @@ class S {
     return Intl.message('Close', name: 'close', desc: '', args: []);
   }
 
-  /// `Error`
-  String get error {
-    return Intl.message('Error', name: 'error', desc: '', args: []);
-  }
-
-  /// `Could not validate captcha. Please try again.`
+  /// `Could not verify the captcha. Please try again.`
   String get recaptchaError {
     return Intl.message(
-      'Could not validate captcha. Please try again.',
+      'Could not verify the captcha. Please try again.',
       name: 'recaptchaError',
       desc: '',
       args: [],
     );
-  }
-
-  /// `Success`
-  String get success {
-    return Intl.message('Success', name: 'success', desc: '', args: []);
   }
 
   /// `This field is required`
@@ -324,25 +314,25 @@ class S {
     return Intl.message('and', name: 'andLabel', desc: '', args: []);
   }
 
-  /// `Code must be 6 digits`
+  /// `The code must be 6 digits`
   String get code6Digits {
     return Intl.message(
-      'Code must be 6 digits',
+      'The code must be 6 digits',
       name: 'code6Digits',
       desc: '',
       args: [],
     );
   }
 
-  /// `Welcome`
+  /// `Welcome!`
   String get welcome {
-    return Intl.message('Welcome', name: 'welcome', desc: '', args: []);
+    return Intl.message('Welcome!', name: 'welcome', desc: '', args: []);
   }
 
-  /// `If the account exists, a code has been sent to the email.`
+  /// `If the account exists, a code has been sent to your email.`
   String get codeSent {
     return Intl.message(
-      'If the account exists, a code has been sent to the email.',
+      'If the account exists, a code has been sent to your email.',
       name: 'codeSent',
       desc: '',
       args: [],
@@ -379,10 +369,10 @@ class S {
     return Intl.message('v1.0.0', name: 'appVersion10Code', desc: '', args: []);
   }
 
-  /// `· Initial release of Filmaniak.\n· Login, register and password recovery.\n· Connection with La Retroteca (WordPress).`
+  /// `·Initial release of Filmaniak.`
   String get appVersion10Description {
     return Intl.message(
-      '· Initial release of Filmaniak.\n· Login, register and password recovery.\n· Connection with La Retroteca (WordPress).',
+      '·Initial release of Filmaniak.',
       name: 'appVersion10Description',
       desc: '',
       args: [],
@@ -427,6 +417,16 @@ class S {
   /// `Hindi`
   String get languageHindi {
     return Intl.message('Hindi', name: 'languageHindi', desc: '', args: []);
+  }
+
+  /// `Indonesian`
+  String get languageIndonesian {
+    return Intl.message(
+      'Indonesian',
+      name: 'languageIndonesian',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Italian`
@@ -524,6 +524,16 @@ class S {
     );
   }
 
+  /// `Push notifications`
+  String get pushNotificationsLabel {
+    return Intl.message(
+      'Push notifications',
+      name: 'pushNotificationsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `You have no notifications.`
   String get notificationsEmptyText {
     return Intl.message(
@@ -554,10 +564,10 @@ class S {
     );
   }
 
-  /// `Do you want to mark all notifications as read?`
+  /// `Mark all notifications as read?`
   String get notificationMarkAllAsk {
     return Intl.message(
-      'Do you want to mark all notifications as read?',
+      'Mark all notifications as read?',
       name: 'notificationMarkAllAsk',
       desc: '',
       args: [],
@@ -604,10 +614,10 @@ class S {
     );
   }
 
-  /// `Do you want to delete all notifications?`
+  /// `Delete all notifications?`
   String get notificationDeleteAllAsk {
     return Intl.message(
-      'Do you want to delete all notifications?',
+      'Delete all notifications?',
       name: 'notificationDeleteAllAsk',
       desc: '',
       args: [],
@@ -634,11 +644,71 @@ class S {
     );
   }
 
-  /// `No more records.`
+  /// `No more items.`
   String get noMoreRecords {
     return Intl.message(
-      'No more records.',
+      'No more items.',
       name: 'noMoreRecords',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device notification permissions`
+  String get notificationsPermissionHint {
+    return Intl.message(
+      'Device notification permissions',
+      name: 'notificationsPermissionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ON`
+  String get notificationsStatusOn {
+    return Intl.message(
+      'ON',
+      name: 'notificationsStatusOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OFF`
+  String get notificationsStatusOff {
+    return Intl.message(
+      'OFF',
+      name: 'notificationsStatusOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open settings`
+  String get notificationsPermissionOpenSettings {
+    return Intl.message(
+      'Open settings',
+      name: 'notificationsPermissionOpenSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications in the browser`
+  String get notificationsWebSettingsTitle {
+    return Intl.message(
+      'Notifications in the browser',
+      name: 'notificationsWebSettingsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For security, we cannot open the browser settings. To allow or block notifications for this site, tap the lock icon next to the address bar → Site settings → Notifications.`
+  String get notificationsWebSettingsBody {
+    return Intl.message(
+      'For security, we cannot open the browser settings. To allow or block notifications for this site, tap the lock icon next to the address bar → Site settings → Notifications.',
+      name: 'notificationsWebSettingsBody',
       desc: '',
       args: [],
     );
@@ -654,6 +724,46 @@ class S {
     return Intl.message(
       'General settings',
       name: 'generalSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings saved successfully.`
+  String get generalSettingsSaveSuccess {
+    return Intl.message(
+      'Settings saved successfully.',
+      name: 'generalSettingsSaveSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not save settings. Check your connection and try again.`
+  String get generalSettingsSaveErrorGeneric {
+    return Intl.message(
+      'Could not save settings. Check your connection and try again.',
+      name: 'generalSettingsSaveErrorGeneric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings cannot be saved. Please sign in again.`
+  String get generalSettingsSaveErrorSession {
+    return Intl.message(
+      'Settings cannot be saved. Please sign in again.',
+      name: 'generalSettingsSaveErrorSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not open system settings.`
+  String get generalSettingsOpenSystemSettingsError {
+    return Intl.message(
+      'Could not open system settings.',
+      name: 'generalSettingsOpenSystemSettingsError',
       desc: '',
       args: [],
     );
@@ -689,11 +799,11 @@ class S {
     );
   }
 
-  /// `Account and profile`
-  String get accountAndProfile {
+  /// `Account settings`
+  String get accountSettings {
     return Intl.message(
-      'Account and profile',
-      name: 'accountAndProfile',
+      'Account settings',
+      name: 'accountSettings',
       desc: '',
       args: [],
     );
@@ -724,11 +834,21 @@ class S {
     );
   }
 
-  /// `Exit application`
+  /// `Exit the app`
   String get dialogCloseAppTitle {
     return Intl.message(
-      'Exit application',
+      'Exit the app',
       name: 'dialogCloseAppTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to exit the app?`
+  String get dialogCloseAppContent {
+    return Intl.message(
+      'Are you sure you want to exit the app?',
+      name: 'dialogCloseAppContent',
       desc: '',
       args: [],
     );
@@ -739,10 +859,10 @@ class S {
     return Intl.message('Close', name: 'buttonClose', desc: '', args: []);
   }
 
-  /// `Close session?`
+  /// `Are you sure you want to log out?`
   String get dialogCloseSessionContent {
     return Intl.message(
-      'Close session?',
+      'Are you sure you want to log out?',
       name: 'dialogCloseSessionContent',
       desc: '',
       args: [],
@@ -784,20 +904,20 @@ class S {
     return Intl.message('Loading...', name: 'loading', desc: '', args: []);
   }
 
-  /// `Wrong credentials`
+  /// `Incorrect credentials`
   String get wrongCredentials {
     return Intl.message(
-      'Wrong credentials',
+      'Incorrect credentials',
       name: 'wrongCredentials',
       desc: '',
       args: [],
     );
   }
 
-  /// `Incorrect username or password. Please wait {seconds} seconds before trying again`
+  /// `Incorrect username or password.\nPlease wait {seconds} seconds before trying again.`
   String loginCountdownMessage(Object seconds) {
     return Intl.message(
-      'Incorrect username or password. Please wait $seconds seconds before trying again',
+      'Incorrect username or password.\nPlease wait $seconds seconds before trying again.',
       name: 'loginCountdownMessage',
       desc: '',
       args: [seconds],
@@ -829,20 +949,20 @@ class S {
     );
   }
 
-  /// `A new version of Filmaniak is available.\nPlease update the app to continue.`
+  /// `A new version of Filmaniak is available.\nUpdate the app to continue.`
   String get dialogErrorAppVersion {
     return Intl.message(
-      'A new version of Filmaniak is available.\nPlease update the app to continue.',
+      'A new version of Filmaniak is available.\nUpdate the app to continue.',
       name: 'dialogErrorAppVersion',
       desc: '',
       args: [],
     );
   }
 
-  /// `The application is currently in maintenance mode. Please try again later.`
+  /// `The app is currently under maintenance. Please try again later.`
   String get dialogErrorServerMaintenance {
     return Intl.message(
-      'The application is currently in maintenance mode. Please try again later.',
+      'The app is currently under maintenance. Please try again later.',
       name: 'dialogErrorServerMaintenance',
       desc: '',
       args: [],
@@ -869,20 +989,20 @@ class S {
     );
   }
 
-  /// `Do you want to save the changes made?`
+  /// `Save your changes?`
   String get dialogConfirmSave {
     return Intl.message(
-      'Do you want to save the changes made?',
+      'Save your changes?',
       name: 'dialogConfirmSave',
       desc: '',
       args: [],
     );
   }
 
-  /// `Need help? Email us or visit our website.`
+  /// `Need help? Reach us through any of our channels and we will get back to you as soon as possible.`
   String get textUserSupportDescription {
     return Intl.message(
-      'Need help? Email us or visit our website.',
+      'Need help? Reach us through any of our channels and we will get back to you as soon as possible.',
       name: 'textUserSupportDescription',
       desc: '',
       args: [],
@@ -919,10 +1039,10 @@ class S {
     );
   }
 
-  /// `Social networks`
+  /// `Social media`
   String get menuBarSectionSocial {
     return Intl.message(
-      'Social networks',
+      'Social media',
       name: 'menuBarSectionSocial',
       desc: '',
       args: [],
@@ -1014,10 +1134,10 @@ class S {
     );
   }
 
-  /// `It is an app with a database of films and TV series, with a set of tools that let users interact with other members, create lists, add ratings and reviews, among other features.`
+  /// `It is an app with a database of films, series and other audiovisual content, with tools that let users interact with other members, create lists, add ratings and reviews, and more.`
   String get faq1Answer {
     return Intl.message(
-      'It is an app with a database of films and TV series, with a set of tools that let users interact with other members, create lists, add ratings and reviews, among other features.',
+      'It is an app with a database of films, series and other audiovisual content, with tools that let users interact with other members, create lists, add ratings and reviews, and more.',
       name: 'faq1Answer',
       desc: '',
       args: [],
@@ -1034,10 +1154,10 @@ class S {
     );
   }
 
-  /// `No, Filmaniak is not a streaming app; it only works as a database with various features around that data.`
+  /// `No, Filmaniak is not a streaming app; it only works as a database with various features around that content.`
   String get faq2Answer {
     return Intl.message(
-      'No, Filmaniak is not a streaming app; it only works as a database with various features around that data.',
+      'No, Filmaniak is not a streaming app; it only works as a database with various features around that content.',
       name: 'faq2Answer',
       desc: '',
       args: [],
@@ -1054,20 +1174,20 @@ class S {
     );
   }
 
-  /// `You can delete your account from your account settings in the app. This removes everything related to your user. This action is irreversible.`
+  /// `You can delete your user from account settings in the app. This removes everything related to your user. This action cannot be undone.`
   String get faq3Answer {
     return Intl.message(
-      'You can delete your account from your account settings in the app. This removes everything related to your user. This action is irreversible.',
+      'You can delete your user from account settings in the app. This removes everything related to your user. This action cannot be undone.',
       name: 'faq3Answer',
       desc: '',
       args: [],
     );
   }
 
-  /// `Username must be 4-20 characters and can only contain letters, numbers, hyphens and underscores.`
+  /// `Username must be 4–20 characters and may only contain letters, numbers, hyphens and underscores.`
   String get errorAuthInvalidUsername {
     return Intl.message(
-      'Username must be 4-20 characters and can only contain letters, numbers, hyphens and underscores.',
+      'Username must be 4–20 characters and may only contain letters, numbers, hyphens and underscores.',
       name: 'errorAuthInvalidUsername',
       desc: '',
       args: [],
@@ -1094,10 +1214,10 @@ class S {
     );
   }
 
-  /// `That username already exists.`
+  /// `That username is already taken.`
   String get errorAuthUsernameExists {
     return Intl.message(
-      'That username already exists.',
+      'That username is already taken.',
       name: 'errorAuthUsernameExists',
       desc: '',
       args: [],
@@ -1124,10 +1244,10 @@ class S {
     );
   }
 
-  /// `Could not create session. Please try again later.`
+  /// `Could not create a session. Please try again later.`
   String get errorAuthSessionFailed {
     return Intl.message(
-      'Could not create session. Please try again later.',
+      'Could not create a session. Please try again later.',
       name: 'errorAuthSessionFailed',
       desc: '',
       args: [],
@@ -1164,10 +1284,10 @@ class S {
     );
   }
 
-  /// `You must provide username or email.`
+  /// `You must enter a username or email.`
   String get errorAuthMissingLogin {
     return Intl.message(
-      'You must provide username or email.',
+      'You must enter a username or email.',
       name: 'errorAuthMissingLogin',
       desc: '',
       args: [],
@@ -1204,10 +1324,10 @@ class S {
     );
   }
 
-  /// `An error occurred. Please try again.`
+  /// `Something went wrong. Please try again.`
   String get errorAuthGeneric {
     return Intl.message(
-      'An error occurred. Please try again.',
+      'Something went wrong. Please try again.',
       name: 'errorAuthGeneric',
       desc: '',
       args: [],
@@ -1224,21 +1344,11 @@ class S {
     );
   }
 
-  /// `Could not delete account. Please try again.`
+  /// `Could not delete the account. Please try again.`
   String get errorAuthDeleteAccountFailed {
     return Intl.message(
-      'Could not delete account. Please try again.',
+      'Could not delete the account. Please try again.',
       name: 'errorAuthDeleteAccountFailed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Account and profile`
-  String get userSectionAccount {
-    return Intl.message(
-      'Account and profile',
-      name: 'userSectionAccount',
       desc: '',
       args: [],
     );
@@ -1249,24 +1359,19 @@ class S {
     return Intl.message('Avatar', name: 'userAvatar', desc: '', args: []);
   }
 
-  /// `Delete avatar`
+  /// `Remove avatar`
   String get buttonDeleteAvatar {
     return Intl.message(
-      'Delete avatar',
+      'Remove avatar',
       name: 'buttonDeleteAvatar',
       desc: '',
       args: [],
     );
   }
 
-  /// `Description`
+  /// `Bio`
   String get userDescription {
-    return Intl.message(
-      'Description',
-      name: 'userDescription',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Bio', name: 'userDescription', desc: '', args: []);
   }
 
   /// `Email`
@@ -1324,9 +1429,9 @@ class S {
     );
   }
 
-  /// `years`
+  /// `years old`
   String get userYears {
-    return Intl.message('years', name: 'userYears', desc: '', args: []);
+    return Intl.message('years old', name: 'userYears', desc: '', args: []);
   }
 
   /// `Delete account`
@@ -1339,10 +1444,10 @@ class S {
     );
   }
 
-  /// `Are you sure you want to delete your account? This action is irreversible. Enter your password to confirm.`
+  /// `Are you sure you want to delete your account? This cannot be undone.\nEnter your password to confirm.`
   String get dialogDeleteAccount {
     return Intl.message(
-      'Are you sure you want to delete your account? This action is irreversible. Enter your password to confirm.',
+      'Are you sure you want to delete your account? This cannot be undone.\nEnter your password to confirm.',
       name: 'dialogDeleteAccount',
       desc: '',
       args: [],
@@ -1359,60 +1464,60 @@ class S {
     );
   }
 
-  /// `Profile updated successfully`
+  /// `Profile updated successfully.`
   String get messageUpdateSuccess {
     return Intl.message(
-      'Profile updated successfully',
+      'Profile updated successfully.',
       name: 'messageUpdateSuccess',
       desc: '',
       args: [],
     );
   }
 
-  /// `Error updating profile`
+  /// `Could not update profile.`
   String get messageUpdateError {
     return Intl.message(
-      'Error updating profile',
+      'Could not update profile.',
       name: 'messageUpdateError',
       desc: '',
       args: [],
     );
   }
 
-  /// `An error occurred`
+  /// `Something went wrong.`
   String get messageGeneralError {
     return Intl.message(
-      'An error occurred',
+      'Something went wrong.',
       name: 'messageGeneralError',
       desc: '',
       args: [],
     );
   }
 
-  /// `Account deleted successfully`
+  /// `Account deleted successfully.`
   String get messageDeleteAccountSuccess {
     return Intl.message(
-      'Account deleted successfully',
+      'Account deleted successfully.',
       name: 'messageDeleteAccountSuccess',
       desc: '',
       args: [],
     );
   }
 
-  /// `Error deleting account`
+  /// `Could not delete account.`
   String get messageDeleteAccountError {
     return Intl.message(
-      'Error deleting account',
+      'Could not delete account.',
       name: 'messageDeleteAccountError',
       desc: '',
       args: [],
     );
   }
 
-  /// `Error processing image`
+  /// `Could not process the image.`
   String get errorProcessingImage {
     return Intl.message(
-      'Error processing image',
+      'Could not process the image.',
       name: 'errorProcessingImage',
       desc: '',
       args: [],
@@ -1569,10 +1674,10 @@ class S {
     );
   }
 
-  /// `We couldn't find this user.`
+  /// `We could not find this user.`
   String get userNotFoundPublicProfileText {
     return Intl.message(
-      'We couldn\'t find this user.',
+      'We could not find this user.',
       name: 'userNotFoundPublicProfileText',
       desc: '',
       args: [],
@@ -1604,10 +1709,10 @@ class S {
     return Intl.message('Share', name: 'shareTooltip', desc: '', args: []);
   }
 
-  /// `Copy profile link`
+  /// `Copy link`
   String get copyProfileLink {
     return Intl.message(
-      'Copy profile link',
+      'Copy link',
       name: 'copyProfileLink',
       desc: '',
       args: [],
@@ -1654,39 +1759,19 @@ class S {
     );
   }
 
-  /// `Age: `
-  String get ageChipPrefix {
-    return Intl.message('Age: ', name: 'ageChipPrefix', desc: '', args: []);
-  }
-
-  /// `Last access: `
+  /// `Last seen`
   String get lastAccessChipPrefix {
     return Intl.message(
-      'Last access: ',
+      'Last seen',
       name: 'lastAccessChipPrefix',
       desc: '',
       args: [],
     );
   }
 
-  /// `Status: `
-  String get statusChipPrefix {
-    return Intl.message(
-      'Status: ',
-      name: 'statusChipPrefix',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Retroteca VIP`
-  String get vipChipLabel {
-    return Intl.message(
-      'Retroteca VIP',
-      name: 'vipChipLabel',
-      desc: '',
-      args: [],
-    );
+  /// `Status`
+  String get statusLabel {
+    return Intl.message('Status', name: 'statusLabel', desc: '', args: []);
   }
 
   /// `Bio`
@@ -1704,10 +1789,10 @@ class S {
     );
   }
 
-  /// `https://yourwebsite.com`
+  /// `https://yoursite.com`
   String get webBlogHint {
     return Intl.message(
-      'https://yourwebsite.com',
+      'https://yoursite.com',
       name: 'webBlogHint',
       desc: '',
       args: [],
@@ -1724,10 +1809,10 @@ class S {
     );
   }
 
-  /// `Remove birthdate`
+  /// `Remove date`
   String get removeBirthdateTooltip {
     return Intl.message(
-      'Remove birthdate',
+      'Remove date',
       name: 'removeBirthdateTooltip',
       desc: '',
       args: [],
@@ -1747,6 +1832,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
       Locale.fromSubtags(languageCode: 'es'),
       Locale.fromSubtags(languageCode: 'fr'),
       Locale.fromSubtags(languageCode: 'hi'),
+      Locale.fromSubtags(languageCode: 'id'),
       Locale.fromSubtags(languageCode: 'it'),
       Locale.fromSubtags(languageCode: 'ja'),
       Locale.fromSubtags(languageCode: 'ko'),

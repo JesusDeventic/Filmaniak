@@ -353,7 +353,7 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                 const SizedBox(height: 4),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.settings_applications_rounded),
+                  leading: const Icon(Icons.app_settings_alt_rounded),
                   title: Text(S.current.generalSettings),
                   onTap: () {
                     Navigator.push(
@@ -366,7 +366,7 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.person_rounded),
-                  title: Text(S.current.accountAndProfile),
+                  title: Text(S.current.accountSettings),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -443,7 +443,6 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
                   leading: const Icon(Icons.cancel_presentation_rounded),
                   title: Text(S.current.dialogCloseAppTitle),
                   onTap: () {
-                    Navigator.pop(dialogContext);
                     _showExitAppDialog();
                   },
                 ),
@@ -459,7 +458,7 @@ class _HomePlaceholderPageState extends State<HomePlaceholderPage> {
     final confirmed = await showConfirmDialogGlobal(
       context,
       title: S.current.dialogCloseAppTitle,
-      message: '${S.current.dialogCloseAppTitle}?',
+      message: S.current.dialogCloseAppContent,
       destructive: true,
     );
     if (confirmed) exit(0);

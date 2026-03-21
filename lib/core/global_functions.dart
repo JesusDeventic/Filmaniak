@@ -63,18 +63,41 @@ Future<void> syncPushConfig() async {
   if (!(kIsWeb || Platform.isAndroid || Platform.isIOS)) return;
   if (globalUserToken.isEmpty) return;
   try {
-    final ctx = navigatorKey.currentContext;
+    final fcm = FirebaseMessaging.instance;
+
+    // Evita [firebase_messaging/permission-blocked] al llamar getToken() sin permiso.
+    final settings = await fcm.getNotificationSettings();
+    if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      return;
+    }
+
     String langCode = 'en';
     String? previousLangCode;
-    if (ctx != null) {
-      final lp = Provider.of<LanguageProvider>(ctx, listen: false);
-      langCode = lp.currentLanguage;
-      previousLangCode = lp.previousLanguage;
+    try {
+      final ctx = navigatorKey.currentContext;
+      if (ctx != null && ctx.mounted) {
+        final lp = Provider.of<LanguageProvider>(ctx, listen: false);
+        langCode = lp.currentLanguage;
+        previousLangCode = lp.previousLanguage;
+      }
+    } catch (_) {
+      // Al volver de ajustes del sistema el árbol puede estar inestable.
     }
-    final fcm = FirebaseMessaging.instance;
-    final fcmToken = kIsWeb
-        ? await fcm.getToken(vapidKey: FilmaniakFirebaseWebConfig.webVapidKey)
-        : await fcm.getToken();
+
+    String? fcmToken;
+    try {
+      fcmToken = kIsWeb
+          ? await fcm.getToken(vapidKey: FilmaniakFirebaseWebConfig.webVapidKey)
+          : await fcm.getToken();
+    } catch (e) {
+      final s = e.toString();
+      if (s.contains('permission') ||
+          s.contains('blocked') ||
+          s.contains('permission-blocked')) {
+        return;
+      }
+      rethrow;
+    }
     if (fcmToken == null || fcmToken.isEmpty) return;
 
     final ok = await FilmaniakApi.registerPushToken(
@@ -85,16 +108,20 @@ Future<void> syncPushConfig() async {
 
     // Topics: solo Android/iOS (en web no aplica)
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
-      if (previousLangCode != null &&
-          previousLangCode.isNotEmpty &&
-          previousLangCode != langCode) {
-        try {
-          await fcm.unsubscribeFromTopic(previousLangCode);
-        } catch (_) {
-          // ignorar
+      try {
+        if (previousLangCode != null &&
+            previousLangCode.isNotEmpty &&
+            previousLangCode != langCode) {
+          try {
+            await fcm.unsubscribeFromTopic(previousLangCode);
+          } catch (_) {
+            // ignorar
+          }
         }
+        await fcm.subscribeToTopic(langCode);
+      } catch (e) {
+        debugPrint('Error suscripción topic push: $e');
       }
-      await fcm.subscribeToTopic(langCode);
     }
   } catch (e) {
     debugPrint('Error sincronizando push (token/topic): $e');
@@ -130,6 +157,8 @@ String getLanguageName(String code) {
       return S.current.languageFrench;
     case 'hi':
       return S.current.languageHindi;
+    case 'id':
+      return S.current.languageIndonesian;
     case 'it':
       return S.current.languageItalian;
     case 'ja':
@@ -194,6 +223,8 @@ String getLanguageFlag(String code) {
       return '🇰🇷';
     case 'hi':
       return '🇮🇳';
+    case 'id':
+      return '🇮🇩';
     case 'tr':
       return '🇹🇷';
     case 'pl':

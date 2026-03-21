@@ -115,6 +115,17 @@ class _FilmaniakAppState extends State<FilmaniakApp> {
   }
 }
 
+
+
+
+// ============================================================================
+// GUIA DE COMANDOS
+// ============================================================================
+// Regenerar archivos de idiomas
+// dart run intl_utils:generate
+
+
+
 // ============================================================================
 // GUIA PARA REUTILIZAR ESTE PROYECTO (FLUTTER + WORDPRESS)
 // ============================================================================

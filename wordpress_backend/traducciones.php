@@ -3,7 +3,7 @@
  * Filmaniak - Traducciones para emails y notificaciones push.
  * Usa el idioma guardado en filmaniak_language (usermeta).
  *
- * Idiomas soportados: ar, ca, de, en, es, fr, hi, it, ja, ko, nl, pl, pt, ro, ru, sv, tr, uk, zh
+ * Idiomas soportados: ar, ca, de, en, es, fr, hi, id, it, ja, ko, nl, pl, pt, ro, ru, sv, tr, uk, zh
  */
 
 if (!defined('ABSPATH')) {
@@ -136,6 +136,11 @@ function filmaniak_translations_all() {
             'reset_email_subject' => 'Filmaniak - पासवर्ड रीसेट कोड',
             'reset_email_body' => "नमस्ते {name},\n\nहमें Filmaniak पर आपके पासवर्ड को रीसेट करने का अनुरोध प्राप्त हुआ है।\n\nआपका सत्यापन कोड है: {code}\n\nयह कोड 15 मिनट में समाप्त हो जाएगा।\nयदि आपने यह परिवर्तन नहीं मांगा है, तो आप इस ईमेल को अनदेखा कर सकते हैं।\n\nFilmaniak टीम",
             'new_private_message_title' => "{name} से नया संदेश",
+        ],
+        'id' => [
+            'reset_email_subject' => 'Filmaniak - Kode untuk mengatur ulang kata sandi',
+            'reset_email_body' => "Halo {name},\n\nKami telah menerima permintaan untuk mengatur ulang kata sandi Anda di Filmaniak.\n\nKode verifikasi Anda: {code}\n\nKode ini berlaku selama 15 menit.\nJika Anda tidak meminta perubahan ini, Anda dapat mengabaikan email ini.\n\nTim Filmaniak",
+            'new_private_message_title' => "Pesan baru dari '{name}'",
         ],
         'ro' => [
             'reset_email_subject' => 'Filmaniak - Cod pentru resetarea parolei',

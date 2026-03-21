@@ -102,7 +102,7 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(S.current.userSectionAccount),
+          title: Text(S.current.accountSettings),
           actions: [
             if (!_isEditing)
               IconButton(

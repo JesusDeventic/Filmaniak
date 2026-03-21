@@ -6,7 +6,10 @@ import 'package:filmaniak/page/users/version_changelog_page.dart';
 import 'package:filmaniak/providers/language_provider.dart';
 import 'package:filmaniak/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 void showCustomSnackBar(String message, {int? type}) {
   Color? backgroundColor;
@@ -106,6 +109,42 @@ Future<bool> showConfirmDialogGlobal(
   return result == true;
 }
 
+/// Diálogo informativo (un solo botón), mismo ancho y márgenes que
+/// [showConfirmDialogGlobal].
+Future<void> showInfoDialogGlobal(
+  BuildContext context, {
+  required String title,
+  required String message,
+  String? actionLabel,
+}) async {
+  final screenWidth = MediaQuery.of(context).size.width;
+  final dialogHInset = ((screenWidth - 800) / 2).clamp(16.0, double.infinity);
+
+  await showDialog<void>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      insetPadding:
+          EdgeInsets.symmetric(horizontal: dialogHInset, vertical: 24),
+      title: Text(title),
+      content: SingleChildScrollView(
+        child: Text(message),
+      ),
+      actions: [
+        Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(actionLabel ?? S.current.buttonClose),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
 /// Avatar del usuario: usa [avatarUrl] si existe (Gravatar/MonsterID/etc. de WP),
 /// o la inicial del username como fallback.
 Widget userAvatar(
@@ -172,19 +211,28 @@ Widget avatarWidget(
   );
 }
 
-void _showAvatarModal(BuildContext context, String imageUrl, String name) {
+/// Hoja inferior arrastrable con barra, cabecera [primary] y cierre (mismo
+/// patrón que el avatar en grande). Reutilizable para QR, imágenes, etc.
+Future<void> _showDraggableAppSheet(
+  BuildContext context, {
+  required String title,
+  required Widget Function(ScrollController scrollController) bodyBuilder,
+  double initialChildSize = 0.9,
+  double minChildSize = 0.5,
+  double maxChildSize = 0.9,
+  double titleFontSize = 20,
+}) {
   unFocusGlobal();
-
-  showModalBottomSheet(
+  return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (BuildContext sheetCtx) {
       return SafeArea(
         child: DraggableScrollableSheet(
-          initialChildSize: 0.9,
-          minChildSize: 0.5,
-          maxChildSize: 0.9,
+          initialChildSize: initialChildSize,
+          minChildSize: minChildSize,
+          maxChildSize: maxChildSize,
           builder: (context, scrollController) {
             final theme = Theme.of(context);
             return Center(
@@ -201,7 +249,6 @@ void _showAvatarModal(BuildContext context, String imageUrl, String name) {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Barra de arrastre
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       width: 40,
@@ -212,7 +259,6 @@ void _showAvatarModal(BuildContext context, String imageUrl, String name) {
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
-                    // Encabezado
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       decoration: BoxDecoration(
@@ -222,12 +268,14 @@ void _showAvatarModal(BuildContext context, String imageUrl, String name) {
                         children: [
                           Expanded(
                             child: Text(
-                              name,
+                              title,
                               style: TextStyle(
                                 color: theme.colorScheme.onPrimary,
-                                fontSize: 20,
+                                fontSize: titleFontSize,
                                 fontWeight: FontWeight.bold,
                               ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           IconButton(
@@ -242,32 +290,8 @@ void _showAvatarModal(BuildContext context, String imageUrl, String name) {
                         ],
                       ),
                     ),
-                    // Contenido
                     Expanded(
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: SizedBox(
-                              width: 280,
-                              height: 280,
-                              child: imageUrl.isEmpty
-                                  ? _buildInitialAvatar(
-                                      context, name, 280)
-                                  : Image.network(
-                                      imageUrl,
-                                      fit: BoxFit.contain,
-                                      errorBuilder: (_, __, ___) => _buildInitialAvatar(
-                                        context,
-                                        name,
-                                        280,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: bodyBuilder(scrollController),
                     ),
                   ],
                 ),
@@ -277,6 +301,135 @@ void _showAvatarModal(BuildContext context, String imageUrl, String name) {
         ),
       );
     },
+  );
+}
+
+void _showAvatarModal(BuildContext context, String imageUrl, String name) {
+  _showDraggableAppSheet(
+    context,
+    title: name,
+    bodyBuilder: (scrollController) => SingleChildScrollView(
+      controller: scrollController,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: 280,
+            height: 280,
+            child: imageUrl.isEmpty
+                ? _buildInitialAvatar(context, name, 280)
+                : Image.network(
+                    imageUrl,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) =>
+                        _buildInitialAvatar(context, name, 280),
+                  ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+/// QR del enlace + copiar enlace + compartir en una sola hoja (mismo estilo
+/// que el avatar: arrastre, cabecera primary, cerrar).
+Future<void> showShareLinkWithQrBottomSheet(
+  BuildContext context, {
+  required String title,
+  required String link,
+  required String shareSubject,
+  double qrSize = 240,
+}) {
+  return _showDraggableAppSheet(
+    context,
+    title: title,
+    initialChildSize: 0.8,
+    minChildSize: 0.4,
+    maxChildSize: 0.8,
+    titleFontSize: 18,
+    bodyBuilder: (scrollController) => SingleChildScrollView(
+      controller: scrollController,
+      child: Builder(
+        builder: (ctx) {
+          // Mismo criterio en claro y oscuro: color de marca sobre blanco
+          // (estándar para lectores; el primary en oscuro sobre fondo oscuro no se vería).
+          final moduleColor = Colors.black;
+          const qrBg = Colors.white;
+          final logoSize = qrSize * 0.24;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: SizedBox(
+                    width: qrSize,
+                    height: qrSize,
+                    child: QrImageView(
+                      data: link,
+                      version: QrVersions.auto,
+                      size: qrSize,
+                      padding: const EdgeInsets.all(6),
+                      gapless: true,
+                      // Nivel H para poder incrustar logo y seguir siendo legible.
+                      errorCorrectionLevel: QrErrorCorrectLevel.H,
+                      backgroundColor: qrBg,
+                      eyeStyle: QrEyeStyle(
+                        eyeShape: QrEyeShape.circle,                            
+                        color: moduleColor,
+                      ),
+                      dataModuleStyle: QrDataModuleStyle(
+                        dataModuleShape: QrDataModuleShape.circle,
+                        color: moduleColor,
+                      ),
+                      embeddedImage: const AssetImage('assets/logo.png'),
+                      embeddedImageStyle: QrEmbeddedImageStyle(
+                        size: Size(logoSize, logoSize),
+                      ),
+                      embeddedImageEmitsError: false,
+                    ),
+                  ),
+                ),
+              ),
+              Divider(
+                height: 1,
+                color: Theme.of(ctx).colorScheme.outlineVariant,
+              ),
+              ListTile(
+                leading: const Icon(Icons.copy_rounded),
+                title: Text(S.current.copyProfileLink),
+                onTap: () async {
+                  await Clipboard.setData(ClipboardData(text: link));
+                  if (ctx.mounted) {
+                    Navigator.of(ctx).pop();
+                  }
+                  showCustomSnackBar(
+                    S.current.copiedProfileLinkSnackbar,
+                    type: 1,
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.share_rounded),
+                title: Text(S.current.shareOption),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  await SharePlus.instance.share(
+                    ShareParams(
+                      text: link,
+                      subject: shareSubject,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+            ],
+          );
+        },
+      ),
+    ),
   );
 }
 
@@ -497,7 +650,7 @@ Widget customToggleButtons({
               title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 18.0,
+                fontSize: 16,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               maxLines: 1,

@@ -21,39 +21,46 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ca';
 
   static String m0(seconds) =>
-      "Usuari o contrasenya incorrectes. Per favor espera ${seconds} segons abans de tornar-ho a intentar";
+      "Usuari o contrasenya incorrectes.\nEspera ${seconds} segons per tornar-ho a intentar.";
 
   static String m1(username) => "Perfil de @${username} a Filmaniak";
 
-  static String m2(username) => "QR per @${username}";
+  static String m2(username) => "QR de @${username}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "accountAndProfile": MessageLookupByLibrary.simpleMessage(
-      "Compte i perfil",
+    "accountSettings": MessageLookupByLibrary.simpleMessage(
+      "Ajustos del compte",
     ),
     "actionNo": MessageLookupByLibrary.simpleMessage("No"),
     "actionYes": MessageLookupByLibrary.simpleMessage("Sí"),
-    "ageChipPrefix": MessageLookupByLibrary.simpleMessage("Edat: "),
     "andLabel": MessageLookupByLibrary.simpleMessage("i"),
     "appName": MessageLookupByLibrary.simpleMessage("Filmaniak"),
     "appVersion10Code": MessageLookupByLibrary.simpleMessage("v1.0.0"),
     "appVersion10Description": MessageLookupByLibrary.simpleMessage(
-      "· Versió inicial de Filmaniak.\n· Login, registre i recuperació de contrasenya.\n· Connexió amb La Retroteca (WordPress).",
+      "·Versió inicial de Filmaniak.",
     ),
     "appVersionChangeLogTitle": MessageLookupByLibrary.simpleMessage(
       "Registre de canvis",
     ),
     "back": MessageLookupByLibrary.simpleMessage("Enrere"),
     "bioLabel": MessageLookupByLibrary.simpleMessage("Bio"),
+    "buttonCancel": MessageLookupByLibrary.simpleMessage("Cancel·la"),
     "buttonChangePassword": MessageLookupByLibrary.simpleMessage(
-      "Canviar contrasenya",
+      "Canvia la contrasenya",
     ),
-    "buttonClose": MessageLookupByLibrary.simpleMessage("Tancar"),
+    "buttonClose": MessageLookupByLibrary.simpleMessage("Tanca"),
+    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirma"),
+    "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage(
+      "Elimina el compte",
+    ),
     "buttonDeleteAvatar": MessageLookupByLibrary.simpleMessage(
-      "Esborrar avatar",
+      "Elimina l\'avatar",
     ),
-    "close": MessageLookupByLibrary.simpleMessage("Tancar"),
+    "buttonReloadNotifications": MessageLookupByLibrary.simpleMessage(
+      "Recarrega",
+    ),
+    "close": MessageLookupByLibrary.simpleMessage("Tanca"),
     "code6Digits": MessageLookupByLibrary.simpleMessage(
       "El codi ha de tenir 6 dígits",
     ),
@@ -61,9 +68,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Si el compte existeix, s\'ha enviat un codi al correu.",
     ),
     "collapseMenu": MessageLookupByLibrary.simpleMessage("Contraure"),
-    "confirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
+    "confirm": MessageLookupByLibrary.simpleMessage("Confirma"),
     "confirmPassword": MessageLookupByLibrary.simpleMessage(
-      "Confirmar contrasenya",
+      "Confirma la contrasenya",
     ),
     "cookiePolicyLabel": MessageLookupByLibrary.simpleMessage(
       "Política de galetes",
@@ -71,24 +78,37 @@ class MessageLookup extends MessageLookupByLibrary {
     "copiedProfileLinkSnackbar": MessageLookupByLibrary.simpleMessage(
       "Enllaç copiat",
     ),
-    "copyProfileLink": MessageLookupByLibrary.simpleMessage(
-      "Copiar enllaç de perfil",
-    ),
+    "copyProfileLink": MessageLookupByLibrary.simpleMessage("Copia l\'enllaç"),
     "currentAppVersionText": MessageLookupByLibrary.simpleMessage(
       "Versió actual",
+    ),
+    "currentPassword": MessageLookupByLibrary.simpleMessage(
+      "Contrasenya actual",
     ),
     "currentServerVersionText": MessageLookupByLibrary.simpleMessage(
       "Versió disponible",
     ),
     "dateFormat": MessageLookupByLibrary.simpleMessage("Format de data"),
+    "deleteAllNotifications": MessageLookupByLibrary.simpleMessage(
+      "Elimina totes les notificacions",
+    ),
+    "dialogCloseAppContent": MessageLookupByLibrary.simpleMessage(
+      "Segur que vols sortir de l\'aplicació?",
+    ),
     "dialogCloseAppTitle": MessageLookupByLibrary.simpleMessage(
-      "Sortir de l\'aplicació",
+      "Surt de l\'aplicació",
     ),
     "dialogCloseSessionContent": MessageLookupByLibrary.simpleMessage(
-      "Tancar la sessió?",
+      "Segur que vols tancar la sessió?",
     ),
     "dialogConfirmSave": MessageLookupByLibrary.simpleMessage(
-      "Vols desar els canvis realitzats?",
+      "Vols desar els canvis?",
+    ),
+    "dialogDeleteAccount": MessageLookupByLibrary.simpleMessage(
+      "Segur que vols eliminar el teu compte? Aquesta acció és irreversible.\nIntrodueix la contrasenya per confirmar.",
+    ),
+    "dialogDeleteAccountPassword": MessageLookupByLibrary.simpleMessage(
+      "Contrasenya",
     ),
     "dialogErrorAppVersion": MessageLookupByLibrary.simpleMessage(
       "Hi ha una nova versió de Filmaniak disponible.\nActualitza l\'app per continuar.",
@@ -97,23 +117,25 @@ class MessageLookup extends MessageLookupByLibrary {
       "No s\'ha pogut connectar amb el servidor de Filmaniak.",
     ),
     "dialogErrorServerMaintenance": MessageLookupByLibrary.simpleMessage(
-      "L\'aplicació està en manteniment en aquest moment. Torna-ho a provar més tard.",
+      "L\'aplicació està en manteniment. Torna-ho a provar més tard.",
     ),
     "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("Error"),
     "dialogWarningTitle": MessageLookupByLibrary.simpleMessage("Atenció"),
     "displayName": MessageLookupByLibrary.simpleMessage(
-      "Nom a mostrar (opcional)",
+      "Nom visible (opcional)",
     ),
     "email": MessageLookupByLibrary.simpleMessage("Correu electrònic"),
-    "error": MessageLookupByLibrary.simpleMessage("Error"),
+    "errorAuthDeleteAccountFailed": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut eliminar el compte. Torna-ho a intentar.",
+    ),
     "errorAuthEmailExists": MessageLookupByLibrary.simpleMessage(
-      "Aquest correu electrònic ja està registrat.",
+      "Aquest correu ja està registrat.",
     ),
     "errorAuthExpiredCode": MessageLookupByLibrary.simpleMessage(
       "El codi ha caducat.",
     ),
     "errorAuthGeneric": MessageLookupByLibrary.simpleMessage(
-      "S\'ha produït un error. Torna-ho a provar.",
+      "S\'ha produït un error. Torna-ho a intentar.",
     ),
     "errorAuthInvalidCode": MessageLookupByLibrary.simpleMessage(
       "El codi no és vàlid.",
@@ -122,7 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Usuari o contrasenya incorrectes.",
     ),
     "errorAuthInvalidEmail": MessageLookupByLibrary.simpleMessage(
-      "El correu electrònic no és vàlid.",
+      "El correu no és vàlid.",
     ),
     "errorAuthInvalidPassword": MessageLookupByLibrary.simpleMessage(
       "La contrasenya ha de tenir almenys 6 caràcters.",
@@ -134,36 +156,42 @@ class MessageLookup extends MessageLookupByLibrary {
       "Falten camps obligatoris.",
     ),
     "errorAuthMissingLogin": MessageLookupByLibrary.simpleMessage(
-      "Has d\'indicar l\'usuari o el correu electrònic.",
+      "Has d\'indicar usuari o correu.",
     ),
     "errorAuthRegisterFailed": MessageLookupByLibrary.simpleMessage(
-      "No s\'ha pogut completar el registre. Torna-ho a provar.",
+      "No s\'ha pogut completar el registre. Torna-ho a intentar.",
     ),
     "errorAuthSessionFailed": MessageLookupByLibrary.simpleMessage(
-      "No s\'ha pogut crear la sessió. Torna-ho a provar més tard.",
+      "No s\'ha pogut crear la sessió. Torna-ho a intentar més tard.",
     ),
     "errorAuthTooManyAttempts": MessageLookupByLibrary.simpleMessage(
       "Has superat el nombre màxim d\'intents.",
     ),
     "errorAuthTooManyRequests": MessageLookupByLibrary.simpleMessage(
-      "Massa intents. Torna-ho a provar més tard.",
+      "Massa intents. Torna-ho a intentar més tard.",
     ),
     "errorAuthUsernameExists": MessageLookupByLibrary.simpleMessage(
       "Aquest nom d\'usuari ja existeix.",
     ),
+    "errorAuthWrongPassword": MessageLookupByLibrary.simpleMessage(
+      "Contrasenya incorrecta.",
+    ),
+    "errorProcessingImage": MessageLookupByLibrary.simpleMessage(
+      "Error en processar la imatge",
+    ),
     "expandMenu": MessageLookupByLibrary.simpleMessage("Expandir"),
     "faq1Answer": MessageLookupByLibrary.simpleMessage(
-      "És una aplicació amb una base de dades de cinema i sèries, amb una sèrie d\'eines que permeten als usuaris interactuar amb altres membres, crear llistes, afegir valoracions i ressenyes entre altres funcionalitats.",
+      "És una aplicació amb una base de dades de pel·lícules, sèries i altre contingut audiovisual, amb eines perquè els usuaris interactuïn amb altres membres, creïn llistes, afegeixin valoracions i ressenyes, i més.",
     ),
     "faq1Question": MessageLookupByLibrary.simpleMessage("Què és Filmaniak?"),
     "faq2Answer": MessageLookupByLibrary.simpleMessage(
-      "No, Filmaniak no és una aplicació de streaming, només funciona com a base de dades amb funcionalitats diverses sobre aquestes dades.",
+      "No, Filmaniak no és una aplicació de streaming; només funciona com a base de dades amb funcionalitats sobre el contingut.",
     ),
     "faq2Question": MessageLookupByLibrary.simpleMessage(
       "Es poden veure pel·lícules i sèries?",
     ),
     "faq3Answer": MessageLookupByLibrary.simpleMessage(
-      "Pots eliminar el teu compte des dels ajustos del teu compte a la pròpia App. Això elimina tot el relacionat amb el teu usuari. Aquesta acció és irreversible.",
+      "Pots eliminar el teu usuari des dels ajustos del compte a l\'app. Això elimina tot el relacionat amb el teu usuari. Aquesta acció és irreversible.",
     ),
     "faq3Question": MessageLookupByLibrary.simpleMessage(
       "Com elimino el meu compte?",
@@ -175,10 +203,25 @@ class MessageLookup extends MessageLookupByLibrary {
       "Has oblidat la contrasenya?",
     ),
     "generalSettings": MessageLookupByLibrary.simpleMessage("Ajustos generals"),
+    "generalSettingsOpenSystemSettingsError":
+        MessageLookupByLibrary.simpleMessage(
+          "No s\'han pogut obrir els ajustos del sistema.",
+        ),
+    "generalSettingsSaveErrorGeneric": MessageLookupByLibrary.simpleMessage(
+      "No s\'han pogut desar els ajustos. Comprova la connexió i torna-ho a intentar.",
+    ),
+    "generalSettingsSaveErrorSession": MessageLookupByLibrary.simpleMessage(
+      "No es poden desar els ajustos. Torna a iniciar la sessió.",
+    ),
+    "generalSettingsSaveSuccess": MessageLookupByLibrary.simpleMessage(
+      "S\'han desat els ajustos correctament.",
+    ),
     "goToHome": MessageLookupByLibrary.simpleMessage("Anar a l\'inici"),
-    "invalidEmail": MessageLookupByLibrary.simpleMessage("Email no vàlid"),
+    "invalidEmail": MessageLookupByLibrary.simpleMessage(
+      "Correu electrònic no vàlid",
+    ),
     "keepSession": MessageLookupByLibrary.simpleMessage(
-      "Mantenir sessió iniciada",
+      "Mantén la sessió iniciada",
     ),
     "language": MessageLookupByLibrary.simpleMessage("Idioma"),
     "languageArabic": MessageLookupByLibrary.simpleMessage("Àrab"),
@@ -189,6 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageFrench": MessageLookupByLibrary.simpleMessage("Francès"),
     "languageGerman": MessageLookupByLibrary.simpleMessage("Alemany"),
     "languageHindi": MessageLookupByLibrary.simpleMessage("Hindi"),
+    "languageIndonesian": MessageLookupByLibrary.simpleMessage("Indonès"),
     "languageItalian": MessageLookupByLibrary.simpleMessage("Italià"),
     "languageJapanese": MessageLookupByLibrary.simpleMessage("Japonès"),
     "languageKorean": MessageLookupByLibrary.simpleMessage("Coreà"),
@@ -196,17 +240,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "languagePortuguese": MessageLookupByLibrary.simpleMessage("Portuguès"),
     "languageRomanian": MessageLookupByLibrary.simpleMessage("Romanès"),
     "languageRussian": MessageLookupByLibrary.simpleMessage("Rus"),
-    "languageSpanish": MessageLookupByLibrary.simpleMessage("Espanyol"),
+    "languageSpanish": MessageLookupByLibrary.simpleMessage("Castellà"),
     "languageSwedish": MessageLookupByLibrary.simpleMessage("Suec"),
     "languageTurkish": MessageLookupByLibrary.simpleMessage("Turc"),
     "languageUkrainian": MessageLookupByLibrary.simpleMessage("Ucraïnès"),
     "lastAccessChipPrefix": MessageLookupByLibrary.simpleMessage(
-      "Últim accés: ",
+      "Última connexió",
     ),
     "legalNoticeLabel": MessageLookupByLibrary.simpleMessage("Avís legal"),
     "loading": MessageLookupByLibrary.simpleMessage("Carregant..."),
     "loginCountdownMessage": m0,
-    "logout": MessageLookupByLibrary.simpleMessage("Tancar sessió"),
+    "logout": MessageLookupByLibrary.simpleMessage("Tanca la sessió"),
+    "markAllAsRead": MessageLookupByLibrary.simpleMessage(
+      "Marca-ho tot com a llegit",
+    ),
     "menuBarSectionSocial": MessageLookupByLibrary.simpleMessage(
       "Xarxes socials",
     ),
@@ -214,8 +261,94 @@ class MessageLookup extends MessageLookupByLibrary {
     "messageChangePasswordSuccess": MessageLookupByLibrary.simpleMessage(
       "Contrasenya canviada correctament.",
     ),
-    "newPassword": MessageLookupByLibrary.simpleMessage("Nova contrasenya"),
+    "messageDeleteAccountError": MessageLookupByLibrary.simpleMessage(
+      "Error en eliminar el compte",
+    ),
+    "messageDeleteAccountSuccess": MessageLookupByLibrary.simpleMessage(
+      "Compte eliminat correctament.",
+    ),
+    "messageGeneralError": MessageLookupByLibrary.simpleMessage(
+      "S\'ha produït un error",
+    ),
+    "messageUpdateError": MessageLookupByLibrary.simpleMessage(
+      "Error en actualitzar el perfil",
+    ),
+    "messageUpdateSuccess": MessageLookupByLibrary.simpleMessage(
+      "Perfil actualitzat correctament.",
+    ),
+    "messagesDelete": MessageLookupByLibrary.simpleMessage("Elimina"),
+    "messagesDeleteConfirm": MessageLookupByLibrary.simpleMessage(
+      "Vols eliminar aquest missatge?",
+    ),
+    "messagesDeleted": MessageLookupByLibrary.simpleMessage(
+      "Missatge eliminat",
+    ),
+    "messagesEdit": MessageLookupByLibrary.simpleMessage("Edita"),
+    "messagesEdited": MessageLookupByLibrary.simpleMessage("editat"),
+    "messagesEmpty": MessageLookupByLibrary.simpleMessage(
+      "Encara no tens converses.",
+    ),
+    "messagesErrorDelete": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut eliminar el missatge.",
+    ),
+    "messagesErrorEdit": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut editar el missatge.",
+    ),
+    "messagesErrorSend": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut enviar el missatge.",
+    ),
+    "messagesNoMessages": MessageLookupByLibrary.simpleMessage(
+      "Encara no hi ha missatges. Escriu alguna cosa!",
+    ),
+    "messagesRead": MessageLookupByLibrary.simpleMessage("Llegit"),
+    "messagesSend": MessageLookupByLibrary.simpleMessage("Envia"),
+    "messagesSent": MessageLookupByLibrary.simpleMessage("Enviat"),
+    "messagesTypeHint": MessageLookupByLibrary.simpleMessage(
+      "Escriu un missatge...",
+    ),
+    "newPassword": MessageLookupByLibrary.simpleMessage("Contrasenya nova"),
+    "noMoreRecords": MessageLookupByLibrary.simpleMessage(
+      "No hi ha més registres.",
+    ),
+    "notificationDeleteAllAsk": MessageLookupByLibrary.simpleMessage(
+      "Vols eliminar totes les notificacions?",
+    ),
+    "notificationMarkAllAsk": MessageLookupByLibrary.simpleMessage(
+      "Vols marcar totes les notificacions com a llegides?",
+    ),
+    "notificationMarkReadError": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut marcar la notificació com a llegida.",
+    ),
+    "notificationMarkedRead": MessageLookupByLibrary.simpleMessage(
+      "Notificació marcada com a llegida.",
+    ),
+    "notificationsAllMarkedRead": MessageLookupByLibrary.simpleMessage(
+      "Totes les notificacions marcades com a llegides.",
+    ),
+    "notificationsDeletedError": MessageLookupByLibrary.simpleMessage(
+      "No s\'han pogut eliminar les notificacions.",
+    ),
+    "notificationsDeletedOk": MessageLookupByLibrary.simpleMessage(
+      "Notificacions eliminades.",
+    ),
+    "notificationsEmptyText": MessageLookupByLibrary.simpleMessage(
+      "No tens notificacions.",
+    ),
     "notificationsLabel": MessageLookupByLibrary.simpleMessage("Notificacions"),
+    "notificationsPermissionHint": MessageLookupByLibrary.simpleMessage(
+      "Permisos de notificacions del dispositiu",
+    ),
+    "notificationsPermissionOpenSettings": MessageLookupByLibrary.simpleMessage(
+      "Obre els ajustos",
+    ),
+    "notificationsStatusOff": MessageLookupByLibrary.simpleMessage("OFF"),
+    "notificationsStatusOn": MessageLookupByLibrary.simpleMessage("ON"),
+    "notificationsWebSettingsBody": MessageLookupByLibrary.simpleMessage(
+      "Per seguretat, no podem obrir els ajustos del navegador. Per permetre o bloquejar les notificacions d\'aquest lloc, toca el candau al costat de l\'adreça web → Configuració del lloc → Notificacions.",
+    ),
+    "notificationsWebSettingsTitle": MessageLookupByLibrary.simpleMessage(
+      "Notificacions al navegador",
+    ),
     "password": MessageLookupByLibrary.simpleMessage("Contrasenya"),
     "passwordChanged": MessageLookupByLibrary.simpleMessage(
       "Contrasenya restablerta correctament.",
@@ -236,7 +369,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "publicProfileAppBarTitle": MessageLookupByLibrary.simpleMessage(
       "Perfil d\'usuari",
     ),
+    "pushNotificationsLabel": MessageLookupByLibrary.simpleMessage(
+      "Notificacions push",
+    ),
     "qrTitle": m2,
+    "recaptchaError": MessageLookupByLibrary.simpleMessage(
+      "No s\'ha pogut validar el captcha. Torna-ho a intentar.",
+    ),
     "registerError": MessageLookupByLibrary.simpleMessage(
       "Error en el registre",
     ),
@@ -250,26 +389,28 @@ class MessageLookup extends MessageLookupByLibrary {
       "Has d\'acceptar els termes i condicions i la política de privacitat",
     ),
     "removeBirthdateTooltip": MessageLookupByLibrary.simpleMessage(
-      "Eliminar data de naixement",
+      "Treu la data",
     ),
     "removeCountryTooltip": MessageLookupByLibrary.simpleMessage(
-      "Eliminar país",
+      "Treu el país",
     ),
-    "retryPublicProfile": MessageLookupByLibrary.simpleMessage("Reintentar"),
-    "sendCode": MessageLookupByLibrary.simpleMessage("Enviar codi"),
+    "retryPublicProfile": MessageLookupByLibrary.simpleMessage(
+      "Torna-ho a intentar",
+    ),
+    "sendCode": MessageLookupByLibrary.simpleMessage("Envia el codi"),
     "sendMessageTooltip": MessageLookupByLibrary.simpleMessage(
-      "Enviar missatge",
+      "Envia un missatge",
     ),
-    "settingsLabel": MessageLookupByLibrary.simpleMessage("Configuració"),
-    "shareOption": MessageLookupByLibrary.simpleMessage("Compartir"),
-    "shareTooltip": MessageLookupByLibrary.simpleMessage("Compartir"),
+    "settingsLabel": MessageLookupByLibrary.simpleMessage("Ajustos"),
+    "shareOption": MessageLookupByLibrary.simpleMessage("Comparteix"),
+    "shareTooltip": MessageLookupByLibrary.simpleMessage("Comparteix"),
     "showMyProfile": MessageLookupByLibrary.simpleMessage(
       "Veure el meu perfil",
     ),
-    "showQrOption": MessageLookupByLibrary.simpleMessage("Mostrar QR"),
-    "signIn": MessageLookupByLibrary.simpleMessage("Iniciar sessió"),
-    "signUp": MessageLookupByLibrary.simpleMessage("Registrar-se"),
-    "socialMailLabel": MessageLookupByLibrary.simpleMessage("Email"),
+    "showQrOption": MessageLookupByLibrary.simpleMessage("Mostra el QR"),
+    "signIn": MessageLookupByLibrary.simpleMessage("Inicia la sessió"),
+    "signUp": MessageLookupByLibrary.simpleMessage("Crea un compte"),
+    "socialMailLabel": MessageLookupByLibrary.simpleMessage("Correu"),
     "socialNetworksText": MessageLookupByLibrary.simpleMessage(
       "Segueix-nos a les xarxes socials.",
     ),
@@ -278,32 +419,50 @@ class MessageLookup extends MessageLookupByLibrary {
       "No s\'ha pogut obrir l\'enllaç.",
     ),
     "socialWhatsappError": MessageLookupByLibrary.simpleMessage(
-      "No s\'ha pogut obrir WhatsApp.",
+      "No s\'ha pogut obrir el WhatsApp.",
     ),
     "socialWhatsappLabel": MessageLookupByLibrary.simpleMessage("WhatsApp"),
-    "statusChipPrefix": MessageLookupByLibrary.simpleMessage("Estat: "),
+    "statusLabel": MessageLookupByLibrary.simpleMessage("Estat"),
     "subjectSupport": MessageLookupByLibrary.simpleMessage(
       "Contacte Filmaniak",
     ),
-    "success": MessageLookupByLibrary.simpleMessage("Èxit"),
     "termsAndConditionsLabel": MessageLookupByLibrary.simpleMessage(
       "Termes i condicions",
     ),
     "textUserSupportDescription": MessageLookupByLibrary.simpleMessage(
-      "Necessites ajuda? Escriu-nos per correu o visita la nostra web.",
+      "Necessites ajuda? Escriu-nos per qualsevol dels nostres canals i et respondrem com abans millor.",
     ),
+    "textfieldDisplayNameLabel": MessageLookupByLibrary.simpleMessage(
+      "Nom visible",
+    ),
+    "textfieldMailEmpty": MessageLookupByLibrary.simpleMessage(
+      "El correu és obligatori",
+    ),
+    "textfieldMailError": MessageLookupByLibrary.simpleMessage(
+      "El correu no és vàlid",
+    ),
+    "textfieldUserBirthdayLabel": MessageLookupByLibrary.simpleMessage(
+      "Data de naixement",
+    ),
+    "textfieldUserCountryLabel": MessageLookupByLibrary.simpleMessage("País"),
     "theme": MessageLookupByLibrary.simpleMessage("Tema"),
     "themeDark": MessageLookupByLibrary.simpleMessage("Mode fosc"),
     "themeLight": MessageLookupByLibrary.simpleMessage("Mode clar"),
+    "userAvatar": MessageLookupByLibrary.simpleMessage("Avatar"),
+    "userDescription": MessageLookupByLibrary.simpleMessage("Descripció"),
+    "userEmail": MessageLookupByLibrary.simpleMessage("Correu electrònic"),
     "userNotFoundPublicProfileText": MessageLookupByLibrary.simpleMessage(
       "No hem trobat aquest usuari.",
     ),
-    "userOrEmail": MessageLookupByLibrary.simpleMessage("Usuari o email"),
+    "userOrEmail": MessageLookupByLibrary.simpleMessage(
+      "Usuari o correu electrònic",
+    ),
     "userSectionContact": MessageLookupByLibrary.simpleMessage("Contacte"),
     "userSectionFAQs": MessageLookupByLibrary.simpleMessage("FAQs"),
     "userSectionSessionClose": MessageLookupByLibrary.simpleMessage(
-      "Tancar sessió",
+      "Tanca la sessió",
     ),
+    "userYears": MessageLookupByLibrary.simpleMessage("anys"),
     "username": MessageLookupByLibrary.simpleMessage("Nom d\'usuari"),
     "usernameMinLength": MessageLookupByLibrary.simpleMessage(
       "Mínim 4 caràcters",
@@ -312,17 +471,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Codi de verificació (6 dígits)",
     ),
     "version": MessageLookupByLibrary.simpleMessage("Versió"),
-    "vipChipLabel": MessageLookupByLibrary.simpleMessage("Retroteca VIP"),
-    "webBlogHint": MessageLookupByLibrary.simpleMessage(
-      "https://yourwebsite.com",
-    ),
-    "webBlogLabel": MessageLookupByLibrary.simpleMessage("Lloc web / bloc"),
+    "webBlogHint": MessageLookupByLibrary.simpleMessage("https://elteuweb.com"),
+    "webBlogLabel": MessageLookupByLibrary.simpleMessage("Pàgina web / blog"),
     "weekStart": MessageLookupByLibrary.simpleMessage(
       "Dia d\'inici de setmana",
     ),
     "weekStartMonday": MessageLookupByLibrary.simpleMessage("Dilluns"),
     "weekStartSunday": MessageLookupByLibrary.simpleMessage("Diumenge"),
-    "welcome": MessageLookupByLibrary.simpleMessage("Benvingut"),
+    "welcome": MessageLookupByLibrary.simpleMessage("Benvingut/da!"),
     "wrongCredentials": MessageLookupByLibrary.simpleMessage(
       "Credencials incorrectes",
     ),

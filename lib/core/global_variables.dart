@@ -15,6 +15,6 @@ FilmaniakAppStatus? globalServerAppStatus;
 
 /// Idiomas soportados (claves para el selector), orden alfabético por clave como en Fitcron.
 const List<String> languageKeys = [
-  'ar', 'ca', 'de', 'en', 'es', 'fr', 'hi', 'it', 'ja', 'ko',
+  'ar', 'ca', 'de', 'en', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko',
   'nl', 'pl', 'pt', 'ro', 'ru', 'sv', 'tr', 'uk', 'zh',
 ];

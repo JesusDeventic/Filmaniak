@@ -21,7 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
   static String m0(seconds) =>
-      "Usuario o contraseña incorrectos.\nPor favor espera ${seconds} segundos para intentarlo nuevamente";
+      "Usuario o contraseña incorrectos.\nPor favor espera ${seconds} segundos para intentarlo de nuevo";
 
   static String m1(username) => "Perfil de @${username} en Filmaniak";
 
@@ -29,12 +29,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "accountAndProfile": MessageLookupByLibrary.simpleMessage(
-      "Cuenta y perfil",
+    "accountSettings": MessageLookupByLibrary.simpleMessage(
+      "Ajustes de la cuenta",
     ),
     "actionNo": MessageLookupByLibrary.simpleMessage("No"),
     "actionYes": MessageLookupByLibrary.simpleMessage("Sí"),
-    "ageChipPrefix": MessageLookupByLibrary.simpleMessage("Edad: "),
     "andLabel": MessageLookupByLibrary.simpleMessage("y"),
     "appName": MessageLookupByLibrary.simpleMessage("Filmaniak"),
     "appVersion10Code": MessageLookupByLibrary.simpleMessage("v1.0.0"),
@@ -64,7 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "El código debe tener 6 dígitos",
     ),
     "codeSent": MessageLookupByLibrary.simpleMessage(
-      "Si la cuenta existe, se ha enviado un código al email.",
+      "Si la cuenta existe, se ha enviado un código al email",
     ),
     "collapseMenu": MessageLookupByLibrary.simpleMessage("Contraer"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
@@ -91,29 +90,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAllNotifications": MessageLookupByLibrary.simpleMessage(
       "Eliminar todas las notificaciones",
     ),
+    "dialogCloseAppContent": MessageLookupByLibrary.simpleMessage(
+      "¿Seguro que quieres salir de la aplicación?",
+    ),
     "dialogCloseAppTitle": MessageLookupByLibrary.simpleMessage(
       "Salir de la aplicación",
     ),
     "dialogCloseSessionContent": MessageLookupByLibrary.simpleMessage(
-      "¿Cerrar sesión?",
+      "¿Seguro que quieres cerrar la sesión?",
     ),
     "dialogConfirmSave": MessageLookupByLibrary.simpleMessage(
       "¿Quieres guardar los cambios realizados?",
     ),
     "dialogDeleteAccount": MessageLookupByLibrary.simpleMessage(
-      "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible. Introduce tu contraseña para confirmar.",
+      "¿Seguro que quieres eliminar tu cuenta? Esta acción es irreversible.\nIntroduce tu contraseña para confirmar.",
     ),
     "dialogDeleteAccountPassword": MessageLookupByLibrary.simpleMessage(
       "Contraseña",
     ),
     "dialogErrorAppVersion": MessageLookupByLibrary.simpleMessage(
-      "Hay una nueva versión de Filmaniak disponible.\nActualiza la app para continuar.",
+      "Hay una nueva versión de Filmaniak disponible.\nActualiza la app para continuar",
     ),
     "dialogErrorServerConnection": MessageLookupByLibrary.simpleMessage(
-      "No se ha podido conectar con el servidor de Filmaniak.",
+      "No se ha podido conectar con el servidor de Filmaniak",
     ),
     "dialogErrorServerMaintenance": MessageLookupByLibrary.simpleMessage(
-      "La aplicación está en mantenimiento en este momento. Vuelve a intentarlo más tarde.",
+      "La aplicación está en mantenimiento en este momento. Vuelve a intentarlo más tarde",
     ),
     "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("Error"),
     "dialogWarningTitle": MessageLookupByLibrary.simpleMessage("Atención"),
@@ -121,57 +123,56 @@ class MessageLookup extends MessageLookupByLibrary {
       "Nombre para mostrar (opcional)",
     ),
     "email": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
-    "error": MessageLookupByLibrary.simpleMessage("Error"),
     "errorAuthDeleteAccountFailed": MessageLookupByLibrary.simpleMessage(
-      "No se pudo eliminar la cuenta. Inténtalo de nuevo.",
+      "No se pudo eliminar la cuenta. Inténtalo de nuevo",
     ),
     "errorAuthEmailExists": MessageLookupByLibrary.simpleMessage(
-      "Ese email ya está registrado.",
+      "Ese email ya está registrado",
     ),
     "errorAuthExpiredCode": MessageLookupByLibrary.simpleMessage(
-      "El código ha expirado.",
+      "El código ha expirado",
     ),
     "errorAuthGeneric": MessageLookupByLibrary.simpleMessage(
-      "Ha ocurrido un error. Inténtalo de nuevo.",
+      "Ha ocurrido un error. Inténtalo de nuevo",
     ),
     "errorAuthInvalidCode": MessageLookupByLibrary.simpleMessage(
-      "El código no es válido.",
+      "El código no es válido",
     ),
     "errorAuthInvalidCredentials": MessageLookupByLibrary.simpleMessage(
-      "Usuario o contraseña incorrectos.",
+      "Usuario o contraseña incorrectos",
     ),
     "errorAuthInvalidEmail": MessageLookupByLibrary.simpleMessage(
-      "El email no es válido.",
+      "El email no es válido",
     ),
     "errorAuthInvalidPassword": MessageLookupByLibrary.simpleMessage(
-      "La contraseña debe tener al menos 6 caracteres.",
+      "La contraseña debe tener al menos 6 caracteres",
     ),
     "errorAuthInvalidUsername": MessageLookupByLibrary.simpleMessage(
       "El nombre de usuario debe tener entre 4 y 20 caracteres y solo puede contener letras, números, guiones y guiones bajos.",
     ),
     "errorAuthMissingFields": MessageLookupByLibrary.simpleMessage(
-      "Faltan campos obligatorios.",
+      "Faltan campos obligatorios",
     ),
     "errorAuthMissingLogin": MessageLookupByLibrary.simpleMessage(
-      "Debes indicar usuario o email.",
+      "Debes indicar usuario o email",
     ),
     "errorAuthRegisterFailed": MessageLookupByLibrary.simpleMessage(
-      "No se pudo completar el registro. Inténtalo de nuevo.",
+      "No se pudo completar el registro. Inténtalo de nuevo",
     ),
     "errorAuthSessionFailed": MessageLookupByLibrary.simpleMessage(
-      "No se pudo crear la sesión. Inténtalo más tarde.",
+      "No se pudo crear la sesión. Inténtalo más tarde",
     ),
     "errorAuthTooManyAttempts": MessageLookupByLibrary.simpleMessage(
-      "Has superado el número máximo de intentos.",
+      "Has superado el número máximo de intentos",
     ),
     "errorAuthTooManyRequests": MessageLookupByLibrary.simpleMessage(
-      "Demasiados intentos. Inténtalo más tarde.",
+      "Demasiados intentos. Inténtalo más tarde",
     ),
     "errorAuthUsernameExists": MessageLookupByLibrary.simpleMessage(
-      "Ese nombre de usuario ya existe.",
+      "Ese nombre de usuario ya existe",
     ),
     "errorAuthWrongPassword": MessageLookupByLibrary.simpleMessage(
-      "Contraseña incorrecta.",
+      "Contraseña incorrecta",
     ),
     "errorProcessingImage": MessageLookupByLibrary.simpleMessage(
       "Error al procesar la imagen",
@@ -182,13 +183,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "faq1Question": MessageLookupByLibrary.simpleMessage("¿Qué es Filmaniak?"),
     "faq2Answer": MessageLookupByLibrary.simpleMessage(
-      "No, Filmaniak no es una aplicación de streaming, tan solo funciona como base de datos con funcionalidades diversas sobre dichos datos.",
+      "No, Filmaniak no es una aplicación de streaming, tan solo funciona como base de datos con funcionalidades diversas sobre el contenido.",
     ),
     "faq2Question": MessageLookupByLibrary.simpleMessage(
       "¿Se pueden ver películas y series?",
     ),
     "faq3Answer": MessageLookupByLibrary.simpleMessage(
-      "Puedes eliminar tu cuenta desde los ajustes de tu cuenta en la propia App. Esto elimina todo lo relacionado con tu usuario. Esta acción es irreversible.",
+      "Puedes eliminar tu usuario desde los ajustes de la cuenta en la propia App. Esto elimina todo lo relacionado y asociado a tu usuario. Esta acción es irreversible.",
     ),
     "faq3Question": MessageLookupByLibrary.simpleMessage(
       "¿Cómo elimino mi cuenta?",
@@ -201,6 +202,19 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "generalSettings": MessageLookupByLibrary.simpleMessage(
       "Ajustes generales",
+    ),
+    "generalSettingsOpenSystemSettingsError":
+        MessageLookupByLibrary.simpleMessage(
+          "No se pudieron abrir los ajustes del sistema",
+        ),
+    "generalSettingsSaveErrorGeneric": MessageLookupByLibrary.simpleMessage(
+      "No se pudieron guardar los ajustes. Comprueba tu conexión e inténtalo de nuevo",
+    ),
+    "generalSettingsSaveErrorSession": MessageLookupByLibrary.simpleMessage(
+      "No se pueden guardar los ajustes. Vuelve a iniciar sesión",
+    ),
+    "generalSettingsSaveSuccess": MessageLookupByLibrary.simpleMessage(
+      "Ajustes guardados correctamente",
     ),
     "goToHome": MessageLookupByLibrary.simpleMessage("Ir a inicio"),
     "invalidEmail": MessageLookupByLibrary.simpleMessage("Email no válido"),
@@ -216,6 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageFrench": MessageLookupByLibrary.simpleMessage("Francés"),
     "languageGerman": MessageLookupByLibrary.simpleMessage("Alemán"),
     "languageHindi": MessageLookupByLibrary.simpleMessage("Hindi"),
+    "languageIndonesian": MessageLookupByLibrary.simpleMessage("Indonesio"),
     "languageItalian": MessageLookupByLibrary.simpleMessage("Italiano"),
     "languageJapanese": MessageLookupByLibrary.simpleMessage("Japonés"),
     "languageKorean": MessageLookupByLibrary.simpleMessage("Coreano"),
@@ -242,7 +257,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "menuHome": MessageLookupByLibrary.simpleMessage("Inicio"),
     "messageChangePasswordSuccess": MessageLookupByLibrary.simpleMessage(
-      "Contraseña cambiada correctamente.",
+      "Contraseña cambiada correctamente",
     ),
     "messageDeleteAccountError": MessageLookupByLibrary.simpleMessage(
       "Error al eliminar la cuenta",
@@ -269,16 +284,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "messagesEdit": MessageLookupByLibrary.simpleMessage("Editar"),
     "messagesEdited": MessageLookupByLibrary.simpleMessage("editado"),
     "messagesEmpty": MessageLookupByLibrary.simpleMessage(
-      "No tienes conversaciones todavía.",
+      "No tienes conversaciones todavía",
     ),
     "messagesErrorDelete": MessageLookupByLibrary.simpleMessage(
-      "No se pudo eliminar el mensaje.",
+      "No se pudo eliminar el mensaje",
     ),
     "messagesErrorEdit": MessageLookupByLibrary.simpleMessage(
-      "No se pudo editar el mensaje.",
+      "No se pudo editar el mensaje",
     ),
     "messagesErrorSend": MessageLookupByLibrary.simpleMessage(
-      "No se pudo enviar el mensaje.",
+      "No se pudo enviar el mensaje",
     ),
     "messagesNoMessages": MessageLookupByLibrary.simpleMessage(
       "Aún no hay mensajes. ¡Escribe algo!",
@@ -291,7 +306,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "newPassword": MessageLookupByLibrary.simpleMessage("Nueva contraseña"),
     "noMoreRecords": MessageLookupByLibrary.simpleMessage(
-      "No hay más registros.",
+      "No hay más registros",
     ),
     "notificationDeleteAllAsk": MessageLookupByLibrary.simpleMessage(
       "¿Quieres eliminar todas las notificaciones?",
@@ -300,29 +315,43 @@ class MessageLookup extends MessageLookupByLibrary {
       "¿Quieres marcar todas las notificaciones como leídas?",
     ),
     "notificationMarkReadError": MessageLookupByLibrary.simpleMessage(
-      "No se pudo marcar la notificación como leída.",
+      "No se pudo marcar la notificación como leída",
     ),
     "notificationMarkedRead": MessageLookupByLibrary.simpleMessage(
       "Notificación marcada como leída.",
     ),
     "notificationsAllMarkedRead": MessageLookupByLibrary.simpleMessage(
-      "Todas las notificaciones marcadas como leídas.",
+      "Todas las notificaciones marcadas como leídas",
     ),
     "notificationsDeletedError": MessageLookupByLibrary.simpleMessage(
-      "No se pudieron eliminar las notificaciones.",
+      "No se pudieron eliminar las notificaciones",
     ),
     "notificationsDeletedOk": MessageLookupByLibrary.simpleMessage(
-      "Notificaciones eliminadas.",
+      "Notificaciones eliminadas",
     ),
     "notificationsEmptyText": MessageLookupByLibrary.simpleMessage(
-      "No tienes notificaciones.",
+      "No tienes notificaciones",
     ),
     "notificationsLabel": MessageLookupByLibrary.simpleMessage(
       "Notificaciones",
     ),
+    "notificationsPermissionHint": MessageLookupByLibrary.simpleMessage(
+      "Permisos de notificaciones del dispositivo",
+    ),
+    "notificationsPermissionOpenSettings": MessageLookupByLibrary.simpleMessage(
+      "Abrir ajustes",
+    ),
+    "notificationsStatusOff": MessageLookupByLibrary.simpleMessage("OFF"),
+    "notificationsStatusOn": MessageLookupByLibrary.simpleMessage("ON"),
+    "notificationsWebSettingsBody": MessageLookupByLibrary.simpleMessage(
+      "Por seguridad, no podemos abrir los ajustes del navegador. Para permitir o bloquear las notificaciones de este sitio, pulsa el candado junto a la dirección web → Configuración del sitio → Notificaciones.",
+    ),
+    "notificationsWebSettingsTitle": MessageLookupByLibrary.simpleMessage(
+      "Notificaciones en el navegador",
+    ),
     "password": MessageLookupByLibrary.simpleMessage("Contraseña"),
     "passwordChanged": MessageLookupByLibrary.simpleMessage(
-      "Contraseña restablecida correctamente.",
+      "Contraseña restablecida correctamente",
     ),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
       "Mínimo 6 caracteres",
@@ -340,9 +369,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "publicProfileAppBarTitle": MessageLookupByLibrary.simpleMessage(
       "Perfil de usuario",
     ),
+    "pushNotificationsLabel": MessageLookupByLibrary.simpleMessage(
+      "Notificaciones Push",
+    ),
     "qrTitle": m2,
     "recaptchaError": MessageLookupByLibrary.simpleMessage(
-      "No se pudo validar el captcha. Inténtalo de nuevo.",
+      "No se pudo validar el captcha. Inténtalo de nuevo",
     ),
     "registerError": MessageLookupByLibrary.simpleMessage(
       "Error en el registro",
@@ -371,24 +403,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "showMyProfile": MessageLookupByLibrary.simpleMessage("Ver mi perfil"),
     "showQrOption": MessageLookupByLibrary.simpleMessage("Mostrar QR"),
     "signIn": MessageLookupByLibrary.simpleMessage("Iniciar sesión"),
-    "signUp": MessageLookupByLibrary.simpleMessage("Registrarse"),
+    "signUp": MessageLookupByLibrary.simpleMessage("Crear cuenta"),
     "socialMailLabel": MessageLookupByLibrary.simpleMessage("Email"),
     "socialNetworksText": MessageLookupByLibrary.simpleMessage(
       "Síguenos en redes sociales.",
     ),
     "socialTelegramLabel": MessageLookupByLibrary.simpleMessage("Telegram"),
     "socialWebError": MessageLookupByLibrary.simpleMessage(
-      "No se pudo abrir el enlace.",
+      "No se pudo abrir el enlace",
     ),
     "socialWhatsappError": MessageLookupByLibrary.simpleMessage(
-      "No se pudo abrir WhatsApp.",
+      "No se pudo abrir WhatsApp",
     ),
     "socialWhatsappLabel": MessageLookupByLibrary.simpleMessage("WhatsApp"),
-    "statusChipPrefix": MessageLookupByLibrary.simpleMessage("Estado: "),
+    "statusLabel": MessageLookupByLibrary.simpleMessage("Estado"),
     "subjectSupport": MessageLookupByLibrary.simpleMessage(
       "Contacto Filmaniak",
     ),
-    "success": MessageLookupByLibrary.simpleMessage("Éxito"),
     "termsAndConditionsLabel": MessageLookupByLibrary.simpleMessage(
       "Términos y condiciones",
     ),
@@ -415,11 +446,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "userDescription": MessageLookupByLibrary.simpleMessage("Descripción"),
     "userEmail": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
     "userNotFoundPublicProfileText": MessageLookupByLibrary.simpleMessage(
-      "No hemos encontrado este usuario.",
+      "No hemos encontrado este usuario",
     ),
-    "userOrEmail": MessageLookupByLibrary.simpleMessage("Usuario o email"),
-    "userSectionAccount": MessageLookupByLibrary.simpleMessage(
-      "Cuenta y perfil",
+    "userOrEmail": MessageLookupByLibrary.simpleMessage(
+      "Usuario o correo electrónico",
     ),
     "userSectionContact": MessageLookupByLibrary.simpleMessage("Contacto"),
     "userSectionFAQs": MessageLookupByLibrary.simpleMessage("FAQs"),
@@ -435,7 +465,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Código de verificación (6 dígitos)",
     ),
     "version": MessageLookupByLibrary.simpleMessage("Versión"),
-    "vipChipLabel": MessageLookupByLibrary.simpleMessage("Retroteca VIP"),
     "webBlogHint": MessageLookupByLibrary.simpleMessage("https://tuweb.com"),
     "webBlogLabel": MessageLookupByLibrary.simpleMessage("Página web / blog"),
     "weekStart": MessageLookupByLibrary.simpleMessage(

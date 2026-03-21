@@ -7,10 +7,7 @@ import 'package:filmaniak/page/messages/private_chat_page.dart';
 import 'package:filmaniak/widget/components_widgets.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
@@ -36,83 +33,11 @@ class _PublicUserProfilePageState extends State<PublicUserProfilePage> {
     if (link.isEmpty) return;
     if (!mounted) return;
 
-    await showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      builder: (ctx) {
-        return SafeArea(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.copy_rounded),
-                title: Text(S.current.copyProfileLink),
-                onTap: () async {
-                  Navigator.of(ctx).pop();
-                  await Clipboard.setData(ClipboardData(text: link));
-                  showCustomSnackBar(S.current.copiedProfileLinkSnackbar, type: 1);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.qr_code_rounded),
-                title: Text(S.current.showQrOption),
-                onTap: () async {
-                  Navigator.of(ctx).pop();
-                  await showDialog<void>(
-                    context: context,
-                    builder: (dCtx) {
-                      return Dialog(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                S.current.qrTitle(user.username),
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 12),
-                              SizedBox(
-                                width: 240,
-                                height: 240,
-                                child: QrImageView(
-                                  data: link,
-                                  version: QrVersions.auto,
-                                  size: 240,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              TextButton(
-                                onPressed: () => Navigator.of(dCtx).pop(),
-                                child: Text(S.current.close),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.share_rounded),
-                title: Text(S.current.shareOption),
-                onTap: () async {
-                  Navigator.of(ctx).pop();
-                  await SharePlus.instance.share(
-                    ShareParams(
-                      text: link,
-                      subject: S.current.profileShareSubject(user.username),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
+    await showShareLinkWithQrBottomSheet(
+      context,
+      title: S.current.shareTooltip,
+      link: link,
+      shareSubject: S.current.profileShareSubject(user.username),
     );
   }
 

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_settings/app_settings.dart';
 import 'package:filmaniak/api/filmaniak_api.dart';
 import 'package:filmaniak/core/global_functions.dart';
 import 'package:filmaniak/core/global_variables.dart';
@@ -7,7 +10,9 @@ import 'package:filmaniak/model/user_model.dart';
 import 'package:filmaniak/providers/language_provider.dart';
 import 'package:filmaniak/providers/theme_provider.dart';
 import 'package:filmaniak/widget/components_widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +24,13 @@ class GeneralSettingsPage extends StatefulWidget {
   State<GeneralSettingsPage> createState() => _GeneralSettingsPageState();
 }
 
-class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
+class _GeneralSettingsPageState extends State<GeneralSettingsPage>
+    with WidgetsBindingObserver {
   String _weekStart = 'monday';
   String _dateFormat = 'dd/MM/yyyy';
   bool _isEditing = false;
+  bool _loadingNotificationPermission = true;
+  AuthorizationStatus _notificationStatus = AuthorizationStatus.notDetermined;
 
   late bool _initialIsDarkMode;
   late String _initialLanguage;
@@ -34,7 +42,32 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadInitialValues();
+    _loadNotificationPermissionStatus();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Tras volver de ajustes del sistema (MIUI, etc.), refrescar en el
+      // siguiente frame evita setState durante transiciones y pantalla negra.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _loadNotificationPermissionStatus().then((_) {
+          if (mounted && globalUserToken.isNotEmpty) {
+            // Si activó notificaciones en el sistema, registrar token sin bloquear UI.
+            syncPushConfig();
+          }
+        });
+      });
+    }
   }
 
   Future<Map<String, bool>> _confirmChangesDialog() async {
@@ -114,7 +147,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
 
   Future<bool> _saveSettings() async {
     if (globalUserToken.isEmpty || globalCurrentUser.username.isEmpty) {
-      showCustomSnackBar(S.current.error, type: -1);
+      showCustomSnackBar(S.current.generalSettingsSaveErrorSession, type: -1);
       return false;
     }
     try {
@@ -125,7 +158,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
         weekStart: _weekStart,
       );
       if (result['success'] != true) {
-        showCustomSnackBar(S.current.error, type: -1);
+        showCustomSnackBar(S.current.generalSettingsSaveErrorGeneric, type: -1);
         return false;
       }
       final userJson = result['user'];
@@ -133,7 +166,7 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
         globalCurrentUser = FilmaniakUser.fromJson(userJson);
         await _prefs.setCachedUser(globalCurrentUser);
       }
-      showCustomSnackBar(S.current.success, type: 1);
+      showCustomSnackBar(S.current.generalSettingsSaveSuccess, type: 1);
       setState(() {
         _initialWeekStart = _weekStart;
         _initialDateFormat = _dateFormat;
@@ -143,9 +176,66 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
       });
       return true;
     } catch (_) {
-      showCustomSnackBar(S.current.error, type: -1);
+      showCustomSnackBar(S.current.generalSettingsSaveErrorGeneric, type: -1);
       return false;
     }
+  }
+
+  Future<void> _loadNotificationPermissionStatus() async {
+    if (!(kIsWeb || Platform.isAndroid || Platform.isIOS)) {
+      if (!mounted) return;
+      setState(() {
+        _loadingNotificationPermission = false;
+        _notificationStatus = AuthorizationStatus.notDetermined;
+      });
+      return;
+    }
+    try {
+      final settings = await FirebaseMessaging.instance.getNotificationSettings();
+      if (!mounted) return;
+      setState(() {
+        _notificationStatus = settings.authorizationStatus;
+        _loadingNotificationPermission = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _notificationStatus = AuthorizationStatus.notDetermined;
+        _loadingNotificationPermission = false;
+      });
+    }
+  }
+
+  Future<void> _openSystemNotificationSettings() async {
+    if (kIsWeb) {
+      if (!mounted) return;
+      final l10n = S.current;
+      await showInfoDialogGlobal(
+        context,
+        title: l10n.notificationsWebSettingsTitle,
+        message: l10n.notificationsWebSettingsBody,
+      );
+      return;
+    }
+    try {
+      // Android: `app-settings:` no existe; iOS sí lo soporta. app_settings abre
+      // la ficha de la app en ambos (MIUI, Samsung, etc.).
+      await AppSettings.openAppSettings();
+    } catch (_) {
+      if (!mounted) return;
+      showCustomSnackBar(S.current.generalSettingsOpenSystemSettingsError, type: -1);
+    }
+  }
+
+  bool get _notificationsAllowed {
+    return _notificationStatus == AuthorizationStatus.authorized ||
+        _notificationStatus == AuthorizationStatus.provisional;
+  }
+
+  bool get _showNotificationPermissionSection {
+    return kIsWeb ||
+        Platform.isAndroid ||
+        Platform.isIOS;
   }
 
   @override
@@ -372,6 +462,83 @@ class _GeneralSettingsPageState extends State<GeneralSettingsPage> {
                           );
                         }).toList(),
                       ),
+                      const SizedBox(height: 16),
+                      if (_showNotificationPermissionSection) ...[
+                        // Permisos de notificaciones del dispositivo (sin guardar en DB/SP)
+                        Row(
+                          children: [
+                            const Icon(Icons.notifications_active_rounded),
+                            const SizedBox(width: 8),
+                            Text(
+                              l10n.pushNotificationsLabel,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          l10n.notificationsPermissionHint,
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withValues(alpha: 0.75),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 44,
+                              child: _loadingNotificationPermission
+                                  ? Center(
+                                      child: SizedBox(
+                                        width: 18,
+                                        height: 18,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
+                                      ),
+                                    )
+                                  : Text(
+                                      _notificationsAllowed
+                                          ? l10n.notificationsStatusOn
+                                          : l10n.notificationsStatusOff,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 15,
+                                        letterSpacing: 0.5,
+                                        color: _notificationsAllowed
+                                            ? Colors.green.shade700
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withValues(alpha: 0.55),
+                                      ),
+                                    ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                onPressed: _openSystemNotificationSettings,
+                                icon: const Icon(Icons.settings_rounded),
+                                label: Text(
+                                  l10n.notificationsPermissionOpenSettings,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),
